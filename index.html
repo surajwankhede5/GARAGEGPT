@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CarBillHelper – Bill Review & Insurance Advisory</title>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <style>
         :root {
             --primary: #FFD700;
@@ -1188,7 +1189,7 @@
         
         <!-- Dual CTA Group -->
         <div class="hero-cta-group">
-            <a href="#upload" style="display:inline-block;background:linear-gradient(135deg,var(--primary),var(--accent));color:var(--darker);padding:1rem 2rem;border-radius:50px;text-decoration:none;font-weight:700;font-size:1rem;transition:all 0.3s;font-family:'Rajdhani',sans-serif;letter-spacing:1px;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">📋 Bill Review Karo</a>
+            <a href="#upload" style="display:inline-block;background:linear-gradient(135deg,var(--primary),var(--accent));color:var(--darker);padding:1rem 2rem;border-radius:50px;text-decoration:none;font-weight:700;font-size:1rem;transition:all 0.3s;font-family:'Rajdhani',sans-serif;letter-spacing:1px;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">📋 Review My Bill</a>
             <a href="#insurance" class="btn-secondary">🛡️ Insurance Advisory</a>
             <a href="https://wa.me/917987481336?text=Hi%2C%20I%20need%20quick%20free%20advice%20about%20my%20car%20service%20bill" class="btn-wa" target="_blank">💬 Free WhatsApp Help</a>
         </div>
@@ -1574,9 +1575,9 @@
          INSURANCE ADVISOR SECTION — seamlessly merged
     ══════════════════════════════════════════════ -->
     <div class="ins-divider" id="insurance">
-        <div class="ins-badge">⚠️ Dealer se insurance mat kharido!</div>
+        <div class="ins-badge">⚠️ Stop Overpaying on Car Insurance!</div>
         <h2 class="section-title" style="margin-bottom:0.5rem;">🛡️ Free <span class="highlight">Insurance Advisory</span></h2>
-        <p style="color:var(--text-dim);max-width:700px;margin:0 auto;">Dealer se insurance lena sabse badi galti hai. Hum aapko batayenge kaise <strong style="color:var(--primary);">same coverage</strong> mein <strong style="color:var(--primary);">40% tak bachao</strong> — aur sahi add-ons bhi choose karo.</p>
+        <p style="color:var(--text-dim);max-width:700px;margin:0 auto;">Buying insurance from the dealer is the biggest mistake. We show you how to save <strong style="color:var(--primary);">up to 40%</strong> with the <strong style="color:var(--primary);">same coverage</strong> — and choose the right add-ons for your car.</p>
     </div>
 
     <section class="ins-section">
@@ -1594,47 +1595,47 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td class="feature-col">💰 Premium Price</td><td class="dealer-col"><span class="crs">✗</span> 20-40% zyada</td><td class="agent-col"><span class="wrn">~</span> Market rate</td><td class="us-col"><span class="chk">✓</span> Sabse sasta rate</td></tr>
-                        <tr><td class="feature-col">📋 Policy Comparison</td><td class="dealer-col"><span class="crs">✗</span> Sirf 1 company</td><td class="agent-col"><span class="wrn">~</span> 2-3 companies</td><td class="us-col"><span class="chk">✓</span> 10+ companies compare</td></tr>
-                        <tr><td class="feature-col">🎁 Add-ons Advice</td><td class="dealer-col"><span class="crs">✗</span> Jo bhi bechein</td><td class="agent-col"><span class="wrn">~</span> Basic advice</td><td class="us-col"><span class="chk">✓</span> Car ke hisaab se</td></tr>
-                        <tr><td class="feature-col">🔍 IDV Check</td><td class="dealer-col"><span class="crs">✗</span> IDV kam rakhte hain</td><td class="agent-col"><span class="wrn">~</span> Pata nahi hota</td><td class="us-col"><span class="chk">✓</span> Sahi IDV ensure</td></tr>
-                        <tr><td class="feature-col">🆓 Zero Dep Cover</td><td class="dealer-col"><span class="crs">✗</span> Extra charge</td><td class="agent-col"><span class="wrn">~</span> Optional batate hain</td><td class="us-col"><span class="chk">✓</span> Hamesha recommend</td></tr>
-                        <tr><td class="feature-col">📞 Claim Support</td><td class="dealer-col"><span class="crs">✗</span> Baad mein ignore</td><td class="agent-col"><span class="wrn">~</span> Limited help</td><td class="us-col"><span class="chk">✓</span> Full claim support</td></tr>
-                        <tr><td class="feature-col">💡 Renewal Reminder</td><td class="dealer-col"><span class="crs">✗</span> Nahi milta</td><td class="agent-col"><span class="wrn">~</span> Kabhi kabhi</td><td class="us-col"><span class="chk">✓</span> Auto reminder</td></tr>
+                        <tr><td class="feature-col">💰 Premium Price</td><td class="dealer-col"><span class="crs">✗</span> 20-40% overpriced</td><td class="agent-col"><span class="wrn">~</span> Market rate</td><td class="us-col"><span class="chk">✓</span> Sabse sasta rate</td></tr>
+                        <tr><td class="feature-col">📋 Policy Comparison</td><td class="dealer-col"><span class="crs">✗</span> Only 1 company</td><td class="agent-col"><span class="wrn">~</span> 2-3 companies</td><td class="us-col"><span class="chk">✓</span> 10+ companies compare</td></tr>
+                        <tr><td class="feature-col">🎁 Add-ons Advice</td><td class="dealer-col"><span class="crs">✗</span> Sell anything</td><td class="agent-col"><span class="wrn">~</span> Basic advice</td><td class="us-col"><span class="chk">✓</span> Tailored to your car</td></tr>
+                        <tr><td class="feature-col">🔍 IDV Check</td><td class="dealer-col"><span class="crs">✗</span> Set low IDV</td><td class="agent-col"><span class="wrn">~</span> Often unaware</td><td class="us-col"><span class="chk">✓</span> Correct IDV assured</td></tr>
+                        <tr><td class="feature-col">🆓 Zero Dep Cover</td><td class="dealer-col"><span class="crs">✗</span> Extra charge</td><td class="agent-col"><span class="wrn">~</span> Mention as optional</td><td class="us-col"><span class="chk">✓</span> Always recommended</td></tr>
+                        <tr><td class="feature-col">📞 Claim Support</td><td class="dealer-col"><span class="crs">✗</span> Ignored after sale</td><td class="agent-col"><span class="wrn">~</span> Limited support</td><td class="us-col"><span class="chk">✓</span> Full claim support ✅</td></tr>
+                        <tr><td class="feature-col">💡 Renewal Reminder</td><td class="dealer-col"><span class="crs">✗</span> No reminder</td><td class="agent-col"><span class="wrn">~</span> Sometimes</td><td class="us-col"><span class="chk">✓</span> Auto reminder ✅</td></tr>
                     </tbody>
                 </table>
             </div>
 
-            <h2 class="section-title" style="margin-top:3.5rem;">Aapki Car Ki <span class="highlight">Actual Value</span> Kitni?</h2>
-            <p style="text-align:center;color:var(--text-dim);font-size:14px;margin-bottom:20px;max-width:640px;margin-left:auto;margin-right:auto;">IDV = Insured Declared Value. Claim ke waqt yahi milta hai. Dealer hamesha IDV <strong style="color:#ff7070;">kam rakhta hai</strong> — premium sasta lagta hai lekin <strong style="color:#ff7070;">claim pe nuksan hota hai!</strong></p>
+            <h2 class="section-title" style="margin-top:3.5rem;">What Is Your Car's <span class="highlight">Actual Insured Value?</span></h2>
+            <p style="text-align:center;color:var(--text-dim);font-size:14px;margin-bottom:20px;max-width:640px;margin-left:auto;margin-right:auto;">IDV = Insured Declared Value. This is what you receive at the time of a claim. Dealers often <strong style="color:#ff7070;">set a lower IDV</strong> to make the premium look cheaper — but you <strong style="color:#ff7070;">lose money at the time of claim!</strong></p>
             <div class="idv-grid">
-                <div class="idv-card new"><div class="idv-year">Brand New Car</div><div class="idv-pct">95%</div><div class="idv-sub">Market Value ka</div><div class="idv-desc">Sirf 5% depreciation. Dealer aksar 85-88% rakhta hai — hum sahi IDV dilate hain!</div></div>
-                <div class="idv-card mid"><div class="idv-year">1-2 Saal Purani</div><div class="idv-pct">80%</div><div class="idv-sub">Market Value ka</div><div class="idv-desc">20% depreciation normal hai. IDV check karo — claim mein puri value milni chahiye!</div></div>
-                <div class="idv-card old"><div class="idv-year">4-5 Saal Purani</div><div class="idv-pct">50%</div><div class="idv-sub">Market Value ka</div><div class="idv-desc">Zero Dep add-on bahut zaruri — warna claim mein bahut kam milega!</div></div>
+                <div class="idv-card new"><div class="idv-year">Brand New Car</div><div class="idv-pct">95%</div><div class="idv-sub">of Market Value</div><div class="idv-desc">Only 5% depreciation. Dealers often set 85-88% — we ensure you get the correct IDV!</div></div>
+                <div class="idv-card mid"><div class="idv-year">1-2 Years Old</div><div class="idv-pct">80%</div><div class="idv-sub">of Market Value</div><div class="idv-desc">20% depreciation is standard. Always verify IDV — you deserve full value at claim time!</div></div>
+                <div class="idv-card old"><div class="idv-year">4-5 Years Old</div><div class="idv-pct">50%</div><div class="idv-sub">of Market Value</div><div class="idv-desc">Zero Dep add-on is critical — without it, you get very little at claim time!</div></div>
             </div>
 
             <div class="savings-hero">
                 <div class="savings-big">40% SAVINGS</div>
-                <div class="savings-sub-text">Online renewal se dealer ke mukable mein itna bachta hai — hum compare karke best rate dilate hain!</div>
+                <div class="savings-sub-text">This is how much you can save on online renewal vs. dealer — we compare and get you the best rate!</div>
                 <div class="savings-items">
-                    <div class="saving-item"><div class="si-icon">💻</div><div><h4>Online Renewal</h4><p>Dealer quote vs online — same policy mein 30-40% fark. Hum best rate dilate hain.</p></div></div>
-                    <div class="saving-item"><div class="si-icon">🔍</div><div><h4>10+ Companies Compare</h4><p>HDFC, Bajaj, Tata AIG, New India — sab compare hote hain. Best price guaranteed.</p></div></div>
-                    <div class="saving-item"><div class="si-icon">📊</div><div><h4>Sahi IDV Set Karo</h4><p>Na zyada na kam — sahi IDV se claim full milega aur premium bhi sahi rahega.</p></div></div>
-                    <div class="saving-item"><div class="si-icon">🎯</div><div><h4>Sirf Zaroori Add-ons</h4><p>Broker jo add-ons thopte hain wo mat lo. Hum batayenge exactly kya chahiye.</p></div></div>
+                    <div class="saving-item"><div class="si-icon">💻</div><div><h4>Online Renewal</h4><p>Dealer quote vs online — same policy, 30-40% price difference. We find you the best rate.</p></div></div>
+                    <div class="saving-item"><div class="si-icon">🔍</div><div><h4>10+ Companies Compare</h4><p>HDFC, Bajaj, Tata AIG, New India — all compared. Best price guaranteed.</p></div></div>
+                    <div class="saving-item"><div class="si-icon">📊</div><div><h4>Set the Right IDV</h4><p>Not too high, not too low — the right IDV means full claim payout and fair premium.</p></div></div>
+                    <div class="saving-item"><div class="si-icon">🎯</div><div><h4>Only Essential Add-ons</h4><p>Don't pay for add-ons you don't need. We tell you exactly what's right for your car.</p></div></div>
                 </div>
             </div>
 
-            <h2 class="section-title">Kaunsa <span class="highlight">Add-on Lena Chahiye?</span></h2>
+            <h2 class="section-title">Which <span class="highlight">Add-ons Should You Choose?</span></h2>
             <div class="addons-grid">
                 <div class="addon-card"><div class="addon-icon">🛡️</div><div class="addon-name">Zero Depreciation</div><div class="addon-desc">Claim pe plastic, glass, rubber parts ka <strong>100% cost</strong> milta hai. Bina iske 30-50% khud bharna padta hai.</div><div class="addon-badge must-have">🔴 Must Have</div></div>
-                <div class="addon-card"><div class="addon-icon">🔧</div><div class="addon-name">Engine Protection</div><div class="addon-desc">Waterlogging ya oil leak se engine damage — standard policy mein <strong>engine cover nahi hota!</strong></div><div class="addon-badge must-have">🔴 Must Have</div></div>
-                <div class="addon-card"><div class="addon-icon">🆘</div><div class="addon-name">Roadside Assistance</div><div class="addon-desc">24/7 towing, flat tyre, dead battery — sirf <strong>₹300-500 extra</strong> mein emergency help milti hai.</div><div class="addon-badge recommended">🟡 Recommended</div></div>
+                <div class="addon-card"><div class="addon-icon">🔧</div><div class="addon-name">Engine Protection</div><div class="addon-desc">Waterlogging or oil leak can damage the engine — standard policies <strong>do NOT cover engine damage!</strong></div><div class="addon-badge must-have">🔴 Must Have</div></div>
+                <div class="addon-card"><div class="addon-icon">🆘</div><div class="addon-name">Roadside Assistance</div><div class="addon-desc">24/7 towing, flat tyre, dead battery — emergency help for just <strong>₹300-500 extra</strong>.</div><div class="addon-badge recommended">🟡 Recommended</div></div>
                 <div class="addon-card"><div class="addon-icon">🧴</div><div class="addon-name">Consumables Cover</div><div class="addon-desc">Oil, nuts, bolts, screws — repair mein ye sab lagta hai. Cover se ye bhi claim mein milta hai.</div><div class="addon-badge recommended">🟡 Recommended</div></div>
-                <div class="addon-card"><div class="addon-icon">📄</div><div class="addon-name">Return to Invoice</div><div class="addon-desc">Total loss ya theft pe original <strong>invoice value milti hai</strong> — IDV nahi. Nayi car ke liye best!</div><div class="addon-badge recommended">🟡 Recommended</div></div>
-                <div class="addon-card"><div class="addon-icon">👤</div><div class="addon-name">Personal Accident</div><div class="addon-desc">Driver ko accident mein <strong>₹15 lakh cover</strong> sirf ₹200-300 mein. Compulsory bhi hai!</div><div class="addon-badge must-have">🔴 Must Have</div></div>
+                <div class="addon-card"><div class="addon-icon">📄</div><div class="addon-name">Return to Invoice</div><div class="addon-desc">In case of total loss or theft, you get the original <strong>invoice value</strong> — not just IDV. Best for new cars!</div><div class="addon-badge recommended">🟡 Recommended</div></div>
+                <div class="addon-card"><div class="addon-icon">👤</div><div class="addon-name">Personal Accident</div><div class="addon-desc">Covers driver injury or death in an accident. <strong>₹15 lakh cover</strong> for just ₹200-300. Mandatory by law!</div><div class="addon-badge must-have">🔴 Must Have</div></div>
             </div>
 
-            <h2 class="section-title" style="margin-top:3.5rem;">Apna <span class="highlight">Premium Estimate</span> Nikalo</h2>
+            <h2 class="section-title" style="margin-top:3.5rem;">Calculate Your <span class="highlight">Premium Estimate</span></h2>
             <div class="calc-card">
                 <div class="calc-grid">
                     <div style="display:flex;flex-direction:column;gap:6px;">
@@ -1659,47 +1660,47 @@
                 <div class="calc-result" id="calcResult" style="display:none;">
                     <div><div class="cr-label">Dealer Quote</div><div class="cr-value" id="calcDealer" style="color:var(--danger);">₹0</div><div class="cr-note">Estimated price</div></div>
                     <div><div class="cr-label">CarBillHelper Rate</div><div class="cr-value" id="calcOurs" style="color:var(--green);">₹0</div><div class="cr-note">Best rate</div></div>
-                    <div><div class="cr-label">Aapki Savings</div><div class="cr-value" id="calcSaving" style="color:var(--primary);">₹0</div><div class="cr-note">Per year!</div></div>
+                    <div><div class="cr-label">Your Savings</div><div class="cr-value" id="calcSaving" style="color:var(--primary);">₹0</div><div class="cr-note">Per year!</div></div>
                 </div>
-                <div id="calcEmpty" style="text-align:center;padding:20px;color:var(--text-dim);font-size:13px;">👆 Car value daalo — estimate dikhega</div>
+                <div id="calcEmpty" style="text-align:center;padding:20px;color:var(--text-dim);font-size:13px;">👆 Enter car value above — estimate will appear</div>
             </div>
 
             <div style="margin-top:3rem;">
                 <div class="ins-lead-card">
                     <div id="insFormState">
-                        <div class="ins-lead-title">🚗 Free Insurance Review Paao</div>
-                        <div class="ins-lead-sub">Details bharo — 24 ghante mein callback milega. <strong>Zero spam guarantee!</strong></div>
+                        <div class="ins-lead-title">🚗 Get Your Free Insurance Review</div>
+                        <div class="ins-lead-sub">Fill in your details — we will call you back within 24 hours. <strong>Zero spam, guaranteed!</strong></div>
                         <div class="form-grid">
-                            <div class="form-group"><label class="form-label">Aapka Naam <span class="required">*</span></label><input class="form-input" id="insName" placeholder="Rahul Sharma"></div>
+                            <div class="form-group"><label class="form-label">Your Name <span class="required">*</span></label><input class="form-input" id="insName" placeholder="Rahul Sharma"></div>
                             <div class="form-group"><label class="form-label">Mobile Number <span class="required">*</span></label><input class="form-input" id="insPhone" type="tel" placeholder="9876543210" maxlength="10"></div>
                         </div>
                         <div class="form-grid">
                             <div class="form-group"><label class="form-label">Car Brand &amp; Model</label><input class="form-input" id="insCar" placeholder="e.g. Maruti Swift"></div>
                             <div class="form-group"><label class="form-label">Car Year</label>
-                                <select class="form-select" id="insYear"><option value="">Select Year</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option><option>2019</option><option>2018</option><option>2017</option><option>2016 ya purani</option></select>
+                                <select class="form-select" id="insYear"><option value="">Select Year</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option><option>2019</option><option>2018</option><option>2017</option><option>2016 or older</option></select>
                             </div>
                         </div>
-                        <div class="form-group" style="margin-bottom:1rem;"><label class="form-label">Insurance Kab Expire Ho Rahi Hai?</label>
-                            <select class="form-select" id="insExpiry"><option value="">Select</option><option>Is mahine mein</option><option>1-3 mahine mein</option><option>3-6 mahine mein</option><option>Already expire ho gayi</option><option>Nahi pata</option></select>
+                        <div class="form-group" style="margin-bottom:1rem;"><label class="form-label">When Does Your Insurance Expire?</label>
+                            <select class="form-select" id="insExpiry"><option value="">Select</option><option>This month</option><option>In 1-3 months</option><option>In 3-6 months</option><option>Already expired</option><option>Not sure</option></select>
                         </div>
                         <div class="form-grid">
-                            <div class="form-group"><label class="form-label">Current Company (Optional)</label>
-                                <select class="form-select" id="insCompany"><option value="">Select</option><option>HDFC Ergo</option><option>Bajaj Allianz</option><option>Tata AIG</option><option>New India Assurance</option><option>ICICI Lombard</option><option>Royal Sundaram</option><option>Nahi pata</option><option>Nahi hai</option></select>
+                            <div class="form-group"><label class="form-label">Current Insurance Company (Optional)</label>
+                                <select class="form-select" id="insCompany"><option value="">Select</option><option>HDFC Ergo</option><option>Bajaj Allianz</option><option>Tata AIG</option><option>New India Assurance</option><option>ICICI Lombard</option><option>Royal Sundaram</option><option>Not sure</option><option>Don't have one</option></select>
                             </div>
-                            <div class="form-group"><label class="form-label">Abhi Kitna Premium? ₹ (Optional)</label><input class="form-input" id="insPremium" type="number" placeholder="e.g. 8500"></div>
+                            <div class="form-group"><label class="form-label">Current Premium Amount ₹ (Optional)</label><input class="form-input" id="insPremium" type="number" placeholder="e.g. 8500"></div>
                         </div>
-                        <button class="submit-button" style="margin-top:8px;" onclick="submitInsuranceLead()">🚀 Free Review Paao — Callback Chahiye!</button>
+                        <button class="submit-button" style="margin-top:8px;" onclick="submitInsuranceLead()">🚀 Get Free Review — Request a Callback!</button>
                         <div class="form-trust2">
                             <div class="ft-item">🔒 Data safe hai</div>
-                            <div class="ft-item">📵 Spam nahi milega</div>
+                            <div class="ft-item">📵 No spam</div>
                             <div class="ft-item">✅ 100% Free</div>
                             <div class="ft-item">⏰ 24hr callback</div>
                         </div>
                     </div>
                     <div class="ins-success" id="insSuccessState">
                         <div class="s-icon">🎉</div>
-                        <h3>Request Submit Ho Gayi!</h3>
-                        <p>24 ghante mein aapko callback milega.</p>
+                        <h3>Request Submitted Successfully!</h3>
+                        <p>We will call you back within 24 hours.</p>
                         <div class="ins-summary" id="insSummary"></div>
                         <button class="submit-button" style="margin-top:12px;width:auto;padding:10px 28px;" onclick="resetInsForm()">New Request Bhejo</button>
                     </div>
@@ -1777,15 +1778,20 @@
         </div>
     </footer>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-        // Header scroll effect
+    <script>
+        // ══════════════════════════════════════
+        // SUPABASE CONFIG
+        // ══════════════════════════════════════
+        const SUPABASE_URL = 'https://kwrrgzlvtqvepdfbhiy.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_x2eMG-cbxLnR9gQZ4pQg-g_t-mlwbx_';
+
+        const { createClient } = supabase;
+        const sbClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // ── Header scroll ──
         const header = document.getElementById('header');
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
+            header.classList.toggle('scrolled', window.scrollY > 50);
         });
 
         // Comprehensive car models database (same as original)
@@ -2173,7 +2179,7 @@
             }
         }
 
-        // File upload handling
+        // ── File upload UI ──
         const fileInput = document.getElementById('fileInput');
         const uploadBox = document.querySelector('.upload-box');
         
@@ -2181,106 +2187,65 @@
             const files = e.target.files;
             if (files.length > 0) {
                 const fileNames = Array.from(files).map(f => f.name).join(', ');
-                const totalSize = Array.from(files).reduce((sum, f) => sum + f.size, 0);
-                const sizeMB = (totalSize / (1024 * 1024)).toFixed(2);
-                
+                const sizeMB = (Array.from(files).reduce((s,f)=>s+f.size,0)/(1024*1024)).toFixed(2);
                 uploadBox.innerHTML = `
                     <div class="upload-icon">✅</div>
                     <p><strong>${files.length} file(s) selected</strong></p>
-                    <p style="font-size: 0.9rem; margin-top: 0.5rem; color: var(--primary);">${fileNames}</p>
-                    <p style="font-size: 0.85rem; margin-top: 0.5rem; color: var(--text-dim);">Total size: ${sizeMB} MB</p>
-                    <p style="font-size: 0.9rem; margin-top: 1rem; color: var(--text-dim);">Click to change</p>
+                    <p style="font-size:0.9rem;margin-top:0.5rem;color:var(--primary);">${fileNames}</p>
+                    <p style="font-size:0.85rem;margin-top:0.5rem;color:var(--text-dim);">Total: ${sizeMB} MB</p>
+                    <p style="font-size:0.9rem;margin-top:1rem;color:var(--text-dim);">Click to change</p>
                 `;
             }
         });
 
-        // Form submission with WhatsApp integration
-        document.getElementById('uploadForm').addEventListener('submit', function(e) {
+        // ── Bill Review Form — Supabase + WhatsApp ──
+        document.getElementById('uploadForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
             const submitButton = this.querySelector('.submit-button');
             submitButton.disabled = true;
             submitButton.innerHTML = 'Submitting...<span class="spinner"></span>';
-            
-            // Collect form data
-            const formData = {
+
+            const refId = 'CBH' + Date.now().toString().slice(-8);
+            const fd = {
                 name: document.getElementById('customerName').value,
                 whatsapp: document.getElementById('whatsappNumber').value,
                 plan: document.getElementById('planType').value,
-                brand: document.getElementById('carBrand').value,
-                model: document.getElementById('carModel').value,
-                fuelType: document.getElementById('fuelType').value,
-                year: document.getElementById('purchaseYear').value || 'Not specified',
-                odometer: document.getElementById('odometer').value || 'Not specified',
-                notes: document.getElementById('notes').value || 'None',
-                files: Array.from(fileInput.files).map(f => f.name).join(', '),
-                timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
+                car_brand: document.getElementById('carBrand').value,
+                car_model: document.getElementById('carModel').value,
+                fuel_type: document.getElementById('fuelType').value,
+                purchase_year: document.getElementById('purchaseYear').value || null,
+                odometer: document.getElementById('odometer').value || null,
+                notes: document.getElementById('notes').value || null,
+                ref_id: refId
             };
 
-            // Generate reference ID
-            const refId = 'CBH' + Date.now().toString().slice(-8);
+            // Save to Supabase
+            try {
+                const { error } = await sbClient.from('bill_leads').insert([fd]);
+                if (error) console.error('Supabase error:', error.message);
+            } catch (err) {
+                console.error('Insert failed:', err);
+            }
 
-            // Format WhatsApp message
-            const whatsappMessage = `🚗 *CarBillHelper - New Submission*
+            // WhatsApp notification
+            const msg = `🚗 *CarBillHelper - New Bill Review*\n\n📋 *Ref:* ${refId}\n👤 ${fd.name} | 📞 ${fd.whatsapp}\n💳 Plan: ${fd.plan}\n🚙 ${fd.car_brand} ${fd.car_model} (${fd.fuel_type})\nYear: ${fd.purchase_year||'--'} | ODO: ${fd.odometer||'--'} km\n📝 ${fd.notes||'No notes'}\n⏰ ${new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'})}`;
+            window.open(`https://wa.me/917987481336?text=${encodeURIComponent(msg)}`, '_blank');
 
-📋 *Reference ID:* ${refId}
+            // Show success
+            const sm = document.getElementById('successMessage');
+            document.getElementById('refId').textContent = refId;
+            sm.classList.add('show');
+            sm.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-👤 *Customer Details:*
-Name: ${formData.name}
-WhatsApp: ${formData.whatsapp}
-
-💳 *Selected Plan:*
-${formData.plan}
-
-🚙 *Vehicle Information:*
-Brand: ${formData.brand}
-Model: ${formData.model}
-Fuel Type: ${formData.fuelType}
-Year: ${formData.year}
-Odometer: ${formData.odometer} km
-
-📄 *Files Uploaded:*
-${formData.files}
-
-📝 *Additional Notes:*
-${formData.notes}
-
-⏰ *Submission Time:*
-${formData.timestamp}
-
----
-*Please analyze the uploaded service estimate and send the detailed report to the customer.*`;
-
-            // Your WhatsApp number - Business Contact
-            const yourWhatsAppNumber = '917987481336';
-            const whatsappURL = `https://wa.me/${yourWhatsAppNumber}?text=${encodeURIComponent(whatsappMessage)}`;
-            
-            // Simulate submission delay
             setTimeout(() => {
-                // Show success message
-                const successMessage = document.getElementById('successMessage');
-                document.getElementById('refId').textContent = refId;
-                successMessage.classList.add('show');
-                successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                
-                // Open WhatsApp
-                window.open(whatsappURL, '_blank');
-                
-                // Reset form
-                setTimeout(() => {
-                    this.reset();
-                    uploadBox.innerHTML = `
-                        <div class="upload-icon">📄</div>
-                        <p><strong>Click to upload</strong> your service estimate</p>
-                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Supports: JPG, PNG, PDF (Max 10MB)</p>
-                    `;
-                    document.getElementById('carModel').innerHTML = '<option value="">First select a brand</option>';
-                    document.getElementId('fuelType').innerHTML = '<option value="">First select a model</option>';
-                    submitButton.disabled = false;
-                    submitButton.innerHTML = 'Get Free Analysis Now';
-                    successMessage.classList.remove('show');
-                }, 5000);
-            }, 1500);
+                this.reset();
+                uploadBox.innerHTML = `<div class="upload-icon">📄</div><p><strong>Click to upload</strong> your service estimate</p><p style="font-size:0.9rem;margin-top:0.5rem;">Supports: JPG, PNG, PDF (Max 10MB)</p>`;
+                document.getElementById('carModel').innerHTML = '<option value="">First select a brand</option>';
+                document.getElementById('fuelType').innerHTML = '<option value="">First select a model</option>';
+                submitButton.disabled = false;
+                submitButton.innerHTML = 'Get Free Analysis Now';
+                sm.classList.remove('show');
+            }, 5000);
         });
 
         // ── Insurance Calculator ──
@@ -2313,8 +2278,8 @@ ${formData.timestamp}
 
         function fmt(n) { return new Intl.NumberFormat('en-IN').format(n || 0); }
 
-        // ── Insurance Lead Submit ──
-        function submitInsuranceLead() {
+        // ── Insurance Lead Submit — Supabase + WhatsApp ──
+        async function submitInsuranceLead() {
             const name = document.getElementById('insName').value.trim();
             const phone = document.getElementById('insPhone').value.trim();
             const car = document.getElementById('insCar').value.trim();
@@ -2323,28 +2288,38 @@ ${formData.timestamp}
             const company = document.getElementById('insCompany').value;
             const premium = document.getElementById('insPremium').value;
 
-            if (!name) { alert('⚠️ Naam zaruri hai'); return; }
-            if (!phone || phone.length !== 10) { alert('⚠️ 10 digit mobile number daalo'); return; }
+            if (!name) { alert('⚠️ Please enter your name'); return; }
+            if (!phone || phone.length !== 10) { alert('⚠️ Please enter a valid 10-digit mobile number'); return; }
 
-            const leads = JSON.parse(localStorage.getItem('cbh_ins_leads') || '[]');
-            leads.push({ name, phone, car, year, expiry, company, premium, ts: new Date().toISOString() });
-            localStorage.setItem('cbh_ins_leads', JSON.stringify(leads));
+            // Save to Supabase
+            try {
+                const { error } = await sbClient.from('insurance_leads').insert([{
+                    name, phone,
+                    car: car || null,
+                    car_year: year || null,
+                    insurance_expiry: expiry || null,
+                    current_company: company || null,
+                    current_premium: premium || null
+                }]);
+                if (error) console.error('Supabase error:', error.message);
+            } catch (err) {
+                console.error('Insert failed:', err);
+            }
 
-            const msg = `🛡️ *NEW INSURANCE LEAD — CarBillHelper*\n\nNaam: ${name}\nPhone: ${phone}\nCar: ${car || '--'} (${year || '--'})\nExpiry: ${expiry || '--'}\nCurrent Company: ${company || '--'}\nCurrent Premium: ${premium ? '₹' + fmt(parseInt(premium)) : '--'}\n\nTime: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}`;
+            // WhatsApp notification
+            const msg = `🛡️ *NEW INSURANCE LEAD — CarBillHelper*\n\nName: ${name}\nPhone: ${phone}\nCar: ${car||'--'} (${year||'--'})\nExpiry: ${expiry||'--'}\nCurrent Company: ${company||'--'}\nCurrent Premium: ${premium?'₹'+fmt(parseInt(premium)):'--'}\n\n⏰ ${new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'})}`;
+            setTimeout(() => window.open(`https://wa.me/917987481336?text=${encodeURIComponent(msg)}`, '_blank'), 600);
 
+            // Show success UI
             document.getElementById('insFormState').style.display = 'none';
             document.getElementById('insSuccessState').style.display = 'block';
             document.getElementById('insSummary').innerHTML = `
-                <strong>📋 Aapki Details:</strong><br>
+                <strong>📋 Your Details:</strong><br>
                 👤 ${name} | 📞 ${phone}
-                ${car ? '<br>🚗 ' + car + ' ' + (year || '') : ''}
+                ${car ? '<br>🚗 ' + car + ' ' + (year||'') : ''}
                 ${expiry ? '<br>📅 Expiry: ' + expiry : ''}
                 ${premium ? '<br>💰 Current Premium: ₹' + fmt(parseInt(premium)) : ''}
             `;
-
-            setTimeout(() => {
-                window.open(`https://wa.me/917987481336?text=${encodeURIComponent(msg)}`, '_blank');
-            }, 800);
         }
 
         function resetInsForm() {
