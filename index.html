@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>CarBillHelper</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
 <style>
 /* ═══ AUTH SCREEN ═══ */
 #authScreen{
@@ -1103,8 +1103,25 @@ tr:last-child td{border-bottom:none;}
 // ═══════════════════════════════════════
 const SUPABASE_URL = 'https://kwrrgzlvtqvepdfbhiy.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_x2eMG-cbxLnR9gQZ4pQg-g_t-mlwbx_';
-const { createClient } = supabase;
-const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let sb;
+try {
+  const { createClient } = supabase;
+  sb = createClient(SUPABASE_URL, SUPABASE_KEY, {
+    auth: {
+      autoRefreshToken: true,
+      persistSession: true,
+      detectSessionInUrl: true,
+      flowType: 'pkce'
+    },
+    global: {
+      headers: { 'X-Client-Info': 'carbillhelper/1.0' }
+    }
+  });
+} catch(e) {
+  console.error('Supabase init error:', e);
+  document.getElementById('authErr').textContent = 'Connection error. Please refresh.';
+}
 
 let currentUser = null;
 
@@ -1123,10 +1140,21 @@ async function signIn(){
   const email = document.getElementById('authEmail').value.trim();
   const pass = document.getElementById('authPass').value;
   if(!email||!pass){setAuthErr('Please enter email and password');return;}
+  setAuthErr('');
   setAuthLoading('Signing in...');
-  const {error} = await sb.auth.signInWithPassword({email, password:pass});
-  setAuthLoading('');
-  if(error) setAuthErr(error.message);
+  try{
+    const {data, error} = await sb.auth.signInWithPassword({email, password:pass});
+    setAuthLoading('');
+    if(error){
+      if(error.message.includes('Invalid login')) setAuthErr('Wrong email or password');
+      else if(error.message.includes('Email not confirmed')) setAuthErr('Please confirm your email first');
+      else setAuthErr(error.message);
+    }
+  }catch(err){
+    setAuthLoading('');
+    setAuthErr('Connection failed. Check your internet and try again.');
+    console.error(err);
+  }
 }
 
 async function signUp(){
@@ -1134,30 +1162,56 @@ async function signUp(){
   const pass = document.getElementById('authPassSu').value;
   if(!email||!pass){setAuthErr('Please enter email and password');return;}
   if(pass.length<6){setAuthErr('Password must be at least 6 characters');return;}
+  setAuthErr('');
   setAuthLoading('Creating account...');
-  const {error} = await sb.auth.signUp({email, password:pass});
-  setAuthLoading('');
-  if(error) setAuthErr(error.message);
-  else setAuthErr('✅ Check your email to confirm your account!');
+  try{
+    const {data, error} = await sb.auth.signUp({
+      email,
+      password: pass,
+      options: {
+        emailRedirectTo: 'https://surajwankhede5.github.io/carbillhelper/'
+      }
+    });
+    setAuthLoading('');
+    if(error) setAuthErr(error.message);
+    else if(data?.user?.identities?.length === 0) setAuthErr('Email already registered. Please sign in.');
+    else setAuthErr('✅ Account created! Check your email to confirm, then Sign In.');
+  }catch(err){
+    setAuthLoading('');
+    setAuthErr('Connection failed. Check your internet and try again.');
+    console.error(err);
+  }
 }
 
 async function forgotPassword(){
   const email = document.getElementById('authEmail').value.trim();
   if(!email){setAuthErr('Enter your email first');return;}
-  const {error} = await sb.auth.resetPasswordForEmail(email);
-  if(error) setAuthErr(error.message);
-  else setAuthErr('✅ Password reset email sent!');
+  try{
+    const {error} = await sb.auth.resetPasswordForEmail(email, {
+      redirectTo: 'https://surajwankhede5.github.io/carbillhelper/'
+    });
+    if(error) setAuthErr(error.message);
+    else setAuthErr('✅ Password reset email sent!');
+  }catch(err){
+    setAuthErr('Failed to send reset email.');
+  }
 }
 
 async function signOut(){
-  await sb.auth.signOut();
+  try{ await sb.auth.signOut(); }catch(e){}
   currentUser = null;
   document.getElementById('authScreen').classList.remove('hidden');
   document.getElementById('app').style.display = 'none';
 }
 
-function setAuthErr(msg){document.getElementById('authErr').textContent = msg;}
-function setAuthLoading(msg){document.getElementById('authLoading').textContent = msg;}
+function setAuthErr(msg){
+  const el = document.getElementById('authErr');
+  if(el) el.textContent = msg;
+}
+function setAuthLoading(msg){
+  const el = document.getElementById('authLoading');
+  if(el) el.textContent = msg;
+}
 
 function setSyncBadge(synced){
   const b = document.getElementById('syncBadge');
