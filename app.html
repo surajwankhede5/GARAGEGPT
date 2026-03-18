@@ -688,7 +688,16 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 
     <!-- ══ DOCUMENTS & INSURANCE ══ -->
     <div class="page" id="tab-docs">
-      <!-- Insurance Coverage -->
+
+      <!-- ── TOP ACTION BAR ── -->
+      <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;" class="fade-up">
+        <button class="btn btn-gold" style="flex:1;padding:10px 12px;font-size:12px;" onclick="openSheet('addDocSheet')">+ Add Document</button>
+        <button class="btn btn-outline" style="padding:10px 12px;font-size:12px;" onclick="exportAllData()" title="Download Backup">📥 Backup</button>
+        <button class="btn btn-outline" style="padding:10px 12px;font-size:12px;" onclick="document.getElementById('importFileInput').click()" title="Restore Backup">📤 Restore</button>
+        <input type="file" id="importFileInput" accept=".json" style="display:none;" onchange="importAllData(this)">
+      </div>
+
+      <!-- ── INSURANCE COVERAGE ── -->
       <div class="card card-gold fade-up" style="margin-bottom:12px;">
         <div class="sec-header" style="margin-bottom:10px;">
           <div class="sec-title">🛡️ Insurance Coverage</div>
@@ -698,19 +707,45 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
           <div class="empty-state" style="padding:16px;"><div class="empty-icon" style="font-size:28px;">🛡️</div><p style="font-size:12px;">Add insurance document to see coverage</p></div>
         </div>
       </div>
-      <!-- Documents -->
-      <div class="fade-up-2">
+
+      <!-- ── DOCUMENTS LIST ── -->
+      <div class="fade-up-2" style="margin-bottom:4px;">
         <div class="sec-header">
-          <div class="sec-title">📁 Documents</div>
-          <button class="btn btn-gold btn-sm" onclick="openSheet('addDocSheet')">+ Add</button>
+          <div class="sec-title">📁 My Documents</div>
+          <div style="display:flex;gap:6px;align-items:center;">
+            <select class="form-input" id="docFilterType" onchange="renderDocs()" style="padding:5px 8px;font-size:11px;height:auto;">
+              <option value="ALL">All Types</option>
+              <option value="Insurance">Insurance</option>
+              <option value="RC Book">RC Book</option>
+              <option value="PUC Certificate">PUC</option>
+              <option value="Fitness Certificate">Fitness</option>
+              <option value="Road Tax">Road Tax</option>
+              <option value="Loan Papers">Loan</option>
+              <option value="Warranty Card">Warranty</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
         </div>
-        <div id="docList"><div class="empty-state"><div class="empty-icon">📁</div><p>No documents added.<br>Add RC, Insurance, PUC etc.</p></div></div>
+        <div id="docList"><div class="empty-state"><div class="empty-icon">📁</div><p>No documents added.<br>Tap "+ Add Document" to start</p></div></div>
       </div>
-      <div class="divider"></div>
-      <div class="fade-up-3">
+
+      <div class="divider" style="margin:14px 0;"></div>
+
+      <!-- ── EXPIRY TRACKER ── -->
+      <div class="fade-up-3" style="margin-bottom:14px;">
         <div class="sec-title" style="margin-bottom:12px;">📅 Expiry Tracker</div>
         <div id="expiryList"><div class="empty-state" style="padding:16px;"><div class="empty-icon" style="font-size:28px;">📅</div><p>No expiry dates added</p></div></div>
       </div>
+
+      <!-- ── SERVICE HISTORY DOWNLOAD ── -->
+      <div class="fade-up-3">
+        <div class="sec-header" style="margin-bottom:10px;">
+          <div class="sec-title">🔧 Service History</div>
+          <button class="btn btn-outline btn-sm" onclick="downloadServiceHistory()" style="font-size:11px;">📥 Download</button>
+        </div>
+        <div id="docServiceSummary" style="font-size:11px;color:var(--text3);"></div>
+      </div>
+
     </div>
 
     <!-- ══ AI ASSISTANT ══ -->
@@ -900,7 +935,9 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 <div class="sheet-overlay" id="addDocSheet">
   <div class="sheet">
     <div class="sheet-handle"></div>
-    <div class="sheet-title">📁 ADD DOCUMENT</div>
+    <div class="sheet-title" id="addDocSheetTitle">📁 ADD DOCUMENT</div>
+    <input type="hidden" id="editDocId" value="">
+
     <div class="form-group"><label class="form-label">Document Type *</label>
       <select class="form-input" id="docType" onchange="handleDocTypeChange()">
         <option value="">Select Type</option>
@@ -914,56 +951,100 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
         <option value="Other">📎 Other</option>
       </select>
     </div>
-    <div class="form-group"><label class="form-label">Document Name</label><input class="form-input" id="docName" placeholder="e.g. HDFC Ergo Insurance 2024"></div>
+
+    <div class="form-group"><label class="form-label">Document Name</label>
+      <input class="form-input" id="docName" placeholder="e.g. HDFC Ergo Insurance 2024"></div>
+
     <div class="form-row-2">
-      <div class="form-group"><label class="form-label">Issue Date</label><input class="form-input" id="docIssue" type="date"></div>
-      <div class="form-group"><label class="form-label">Expiry Date</label><input class="form-input" id="docExpiry" type="date"></div>
+      <div class="form-group"><label class="form-label">Issue Date</label>
+        <input class="form-input" id="docIssue" type="date"></div>
+      <div class="form-group"><label class="form-label">Expiry Date</label>
+        <input class="form-input" id="docExpiry" type="date"></div>
     </div>
-    <div class="form-group"><label class="form-label">Document Number</label><input class="form-input" id="docNumber" placeholder="Policy / Certificate number"></div>
-    <!-- Insurance-specific fields -->
+
+    <div class="form-group"><label class="form-label">Document Number</label>
+      <input class="form-input" id="docNumber" placeholder="Policy / Certificate number"></div>
+
+    <div class="form-group"><label class="form-label">Notes (optional)</label>
+      <textarea class="form-input" id="docNotes" rows="2" placeholder="Agent name, contact, renewal reminder..." style="resize:none;"></textarea></div>
+
+    <!-- Photo Upload -->
+    <div class="form-group">
+      <label class="form-label">Document Photo / Scan (optional)</label>
+      <div id="docPhotoArea" onclick="document.getElementById('docPhotoInput').click()"
+        style="border:2px dashed var(--border);border-radius:10px;padding:16px;text-align:center;cursor:pointer;transition:all 0.2s;"
+        onmouseover="this.style.borderColor='var(--gold-border)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-size:24px;margin-bottom:4px;">📷</div>
+        <div style="font-size:12px;color:var(--text3);">Tap to attach photo / scan</div>
+      </div>
+      <input type="file" id="docPhotoInput" accept="image/*,application/pdf" style="display:none;" onchange="handleDocPhoto(this)">
+      <div id="docPhotoPreview" style="display:none;margin-top:8px;">
+        <div style="display:flex;align-items:center;gap:8px;background:var(--bg3);border-radius:8px;padding:8px 10px;">
+          <span style="font-size:18px;" id="docPhotoIcon">📷</span>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:12px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" id="docPhotoName">photo.jpg</div>
+            <div style="font-size:10px;color:var(--green);">✅ Ready to save</div>
+          </div>
+          <button class="btn btn-ghost btn-sm" style="color:var(--red);padding:4px 8px;" onclick="removeDocPhoto()">✕</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Insurance fields -->
     <div id="insuranceFields" style="display:none;">
       <div class="divider"></div>
       <div style="font-size:11px;color:var(--gold);font-weight:700;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.08em;">🛡️ Insurance Details</div>
       <div class="form-row-2">
-        <div class="form-group"><label class="form-label">Insurance Company</label>
+        <div class="form-group"><label class="form-label">Company</label>
           <select class="form-input" id="insCompany">
             <option value="">Select</option>
             <option>HDFC Ergo</option><option>Bajaj Allianz</option><option>Tata AIG</option>
             <option>New India Assurance</option><option>ICICI Lombard</option>
-            <option>Royal Sundaram</option><option>Reliance General</option><option>Other</option>
+            <option>Royal Sundaram</option><option>Reliance General</option><option>Acko</option>
+            <option>Go Digit</option><option>Navi</option><option>Other</option>
           </select>
         </div>
         <div class="form-group"><label class="form-label">Policy Type</label>
           <select class="form-input" id="insPolicyType">
             <option value="comprehensive">Comprehensive</option>
-            <option value="thirdparty">Third Party</option>
+            <option value="thirdparty">Third Party Only</option>
+            <option value="standalone_od">Standalone OD</option>
           </select>
         </div>
       </div>
       <div class="form-row-2">
-        <div class="form-group"><label class="form-label">IDV (₹)</label><input class="form-input" id="insIDV" type="number" placeholder="600000"></div>
-        <div class="form-group"><label class="form-label">Annual Premium (₹)</label><input class="form-input" id="insPremium" type="number" placeholder="8500"></div>
+        <div class="form-group"><label class="form-label">IDV (₹)</label>
+          <input class="form-input" id="insIDV" type="number" placeholder="600000"></div>
+        <div class="form-group"><label class="form-label">Annual Premium (₹)</label>
+          <input class="form-input" id="insPremium" type="number" placeholder="8500"></div>
       </div>
-      <div class="form-group"><label class="form-label">Add-ons Covered (select all that apply)</label>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px;" id="addonsCheckboxes">
-          <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;"><input type="checkbox" id="addon_zerodep" value="Zero Depreciation"> Zero Depreciation</label>
+      <div class="form-group"><label class="form-label">Add-ons Covered</label>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px;">
+          <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;"><input type="checkbox" id="addon_zerodep" value="Zero Depreciation"> Zero Dep</label>
           <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;"><input type="checkbox" id="addon_engine" value="Engine Protection"> Engine Protection</label>
-          <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;"><input type="checkbox" id="addon_rsa" value="Roadside Assistance"> Roadside Assistance</label>
+          <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;"><input type="checkbox" id="addon_rsa" value="Roadside Assistance"> RSA</label>
           <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;"><input type="checkbox" id="addon_consumables" value="Consumables Cover"> Consumables</label>
-          <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;"><input type="checkbox" id="addon_rti" value="Return to Invoice"> Return to Invoice</label>
-          <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;"><input type="checkbox" id="addon_pa" value="Personal Accident"> Personal Accident</label>
+          <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;"><input type="checkbox" id="addon_rti" value="Return to Invoice"> RTI</label>
+          <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;"><input type="checkbox" id="addon_pa" value="Personal Accident"> PA Cover</label>
+          <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;"><input type="checkbox" id="addon_tyre" value="Tyre Protection"> Tyre Protection</label>
+          <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;"><input type="checkbox" id="addon_alloy" value="Alloy Wheel Cover"> Alloy Cover</label>
         </div>
       </div>
-      <div class="form-group"><label class="form-label">NCB (%)</label>
-        <select class="form-input" id="insNCB">
-          <option value="0">0% (New / Claim Made)</option>
-          <option value="20">20% (1 year)</option><option value="25">25% (2 years)</option>
-          <option value="35">35% (3 years)</option><option value="45">45% (4 years)</option>
-          <option value="50">50% (5+ years)</option>
-        </select>
+      <div class="form-row-2">
+        <div class="form-group"><label class="form-label">NCB (%)</label>
+          <select class="form-input" id="insNCB">
+            <option value="0">0%</option><option value="20">20% (1yr)</option>
+            <option value="25">25% (2yr)</option><option value="35">35% (3yr)</option>
+            <option value="45">45% (4yr)</option><option value="50">50% (5yr+)</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Agent Contact</label>
+          <input class="form-input" id="insAgent" placeholder="Agent phone/name"></div>
       </div>
     </div>
-    <button class="btn btn-gold btn-full" onclick="saveDocument()">💾 Save Document</button>
+
+    <button class="btn btn-gold btn-full" id="saveDocBtn" onclick="saveDocument()">💾 Save Document</button>
+    <button class="btn btn-outline btn-full" style="margin-top:8px;" onclick="cancelDocEdit()">Cancel</button>
   </div>
 </div>
 
@@ -2230,137 +2311,358 @@ function renderWarranties(){
 // ════════════════════════════════════════
 // DOCUMENTS & INSURANCE
 // ════════════════════════════════════════
+// ════════════════════════════════════════
+// DOCUMENT SYSTEM — Complete
+// ════════════════════════════════════════
+
+let docPhotoData = null; // base64 of photo
+
 function handleDocTypeChange(){
-  const type=document.getElementById('docType').value;
-  document.getElementById('insuranceFields').style.display=type==='Insurance'?'block':'none';
+  const type = document.getElementById('docType').value;
+  document.getElementById('insuranceFields').style.display = type==='Insurance' ? 'block' : 'none';
+  // Auto-fill document name
+  if(type && !document.getElementById('docName').value) {
+    const car = getActiveCar();
+    const year = new Date().getFullYear();
+    const names = {
+      'Insurance': `Car Insurance ${year}`,
+      'RC Book': car ? `RC — ${car.reg||car.brand+' '+car.model}` : `RC Book`,
+      'PUC Certificate': `PUC Certificate ${year}`,
+      'Fitness Certificate': `Fitness Certificate ${year}`,
+      'Road Tax': `Road Tax ${year}`,
+    };
+    document.getElementById('docName').value = names[type]||'';
+  }
+}
+
+function handleDocPhoto(input){
+  const file = input.files[0];
+  if(!file) return;
+  // Check size — max 5MB
+  if(file.size > 5 * 1024 * 1024){ toast('⚠️ File too large. Max 5MB.'); return; }
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    docPhotoData = e.target.result;
+    document.getElementById('docPhotoArea').style.display = 'none';
+    document.getElementById('docPhotoPreview').style.display = 'block';
+    document.getElementById('docPhotoName').textContent = file.name;
+    document.getElementById('docPhotoIcon').textContent = file.type.includes('pdf') ? '📄' : '🖼️';
+  };
+  reader.onerror = () => toast('❌ Could not read file. Try again.');
+  reader.readAsDataURL(file);
+}
+
+function removeDocPhoto(){
+  docPhotoData = null;
+  document.getElementById('docPhotoPreview').style.display = 'none';
+  document.getElementById('docPhotoArea').style.display = 'block';
+  document.getElementById('docPhotoInput').value = '';
 }
 
 function saveDocument(){
-  const car=getActiveCar();
-  if(!car){toast('⚠️ Add a car first');return;}
-  const type=document.getElementById('docType').value;
-  if(!type){toast('⚠️ Select document type');return;}
-  const doc={
-    id:uid(),
+  const car = getActiveCar();
+  if(!car){ toast('⚠️ Add a car first'); return; }
+  const type = document.getElementById('docType').value;
+  if(!type){ toast('⚠️ Select document type'); return; }
+
+  const editId = document.getElementById('editDocId').value;
+  const isEdit = !!editId;
+
+  const doc = {
+    id: isEdit ? editId : uid(),
     type,
-    name:document.getElementById('docName').value||type,
-    issue:document.getElementById('docIssue').value,
-    expiry:document.getElementById('docExpiry').value,
-    number:document.getElementById('docNumber').value,
+    name: document.getElementById('docName').value.trim() || type,
+    issue: document.getElementById('docIssue').value,
+    expiry: document.getElementById('docExpiry').value,
+    number: document.getElementById('docNumber').value.trim(),
+    notes: document.getElementById('docNotes').value.trim(),
+    photoData: docPhotoData || (isEdit ? getExistingDocPhoto(car.id, editId) : null),
+    createdAt: isEdit ? undefined : new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   };
+  if(!isEdit) doc.createdAt = new Date().toISOString();
+
   // Insurance extras
-  if(type==='Insurance'){
-    const addons=[];
-    ['addon_zerodep','addon_engine','addon_rsa','addon_consumables','addon_rti','addon_pa'].forEach(id=>{
-      const cb=document.getElementById(id);
-      if(cb&&cb.checked) addons.push(cb.value);
+  if(type === 'Insurance'){
+    const addons = [];
+    ['addon_zerodep','addon_engine','addon_rsa','addon_consumables','addon_rti','addon_pa','addon_tyre','addon_alloy'].forEach(id=>{
+      const cb = document.getElementById(id);
+      if(cb && cb.checked) addons.push(cb.value);
     });
-    doc.insurance={
-      company:document.getElementById('insCompany').value,
-      policyType:document.getElementById('insPolicyType').value,
-      idv:parseInt(document.getElementById('insIDV').value)||0,
-      premium:parseInt(document.getElementById('insPremium').value)||0,
+    doc.insurance = {
+      company: document.getElementById('insCompany').value,
+      policyType: document.getElementById('insPolicyType').value,
+      idv: parseInt(document.getElementById('insIDV').value)||0,
+      premium: parseInt(document.getElementById('insPremium').value)||0,
       addons,
-      ncb:parseInt(document.getElementById('insNCB').value)||0
+      ncb: parseInt(document.getElementById('insNCB').value)||0,
+      agent: document.getElementById('insAgent').value.trim(),
     };
   }
-  const docs=getCarData(car.id,'documents');
-  docs.push(doc);
-  setCarData(car.id,'documents',docs);
+
+  let docs = getCarData(car.id, 'documents');
+  if(isEdit){
+    const idx = docs.findIndex(d => d.id === editId);
+    if(idx >= 0) docs[idx] = doc; else docs.push(doc);
+  } else {
+    docs.push(doc);
+  }
+  setCarData(car.id, 'documents', docs);
+
   closeSheet('addDocSheet');
-  clearForm(['docName','docIssue','docExpiry','docNumber','insIDV','insPremium']);
-  document.getElementById('docType').value='';
-  document.getElementById('insuranceFields').style.display='none';
+  resetDocForm();
   renderDocs();
   renderDashboard();
-  toast('✅ Document saved!');
+  toast(isEdit ? '✅ Document updated!' : '✅ Document saved!');
+}
+
+function getExistingDocPhoto(carId, docId){
+  const docs = getCarData(carId, 'documents');
+  const doc = docs.find(d => d.id === docId);
+  return doc ? doc.photoData : null;
+}
+
+function resetDocForm(){
+  docPhotoData = null;
+  document.getElementById('editDocId').value = '';
+  document.getElementById('addDocSheetTitle').textContent = '📁 ADD DOCUMENT';
+  document.getElementById('saveDocBtn').textContent = '💾 Save Document';
+  clearForm(['docName','docIssue','docExpiry','docNumber','docNotes','insIDV','insPremium','insAgent']);
+  document.getElementById('docType').value = '';
+  document.getElementById('insCompany').value = '';
+  document.getElementById('insPolicyType').value = 'comprehensive';
+  document.getElementById('insNCB').value = '0';
+  document.getElementById('insuranceFields').style.display = 'none';
+  ['addon_zerodep','addon_engine','addon_rsa','addon_consumables','addon_rti','addon_pa','addon_tyre','addon_alloy'].forEach(id=>{
+    const cb = document.getElementById(id); if(cb) cb.checked = false;
+  });
+  removeDocPhoto();
+}
+
+function cancelDocEdit(){
+  resetDocForm();
+  closeSheet('addDocSheet');
+}
+
+function editDoc(id){
+  const car = getActiveCar();
+  if(!car) return;
+  const docs = getCarData(car.id, 'documents');
+  const doc = docs.find(d => d.id === id);
+  if(!doc) return;
+
+  // Populate form
+  document.getElementById('editDocId').value = id;
+  document.getElementById('addDocSheetTitle').textContent = '✏️ EDIT DOCUMENT';
+  document.getElementById('saveDocBtn').textContent = '💾 Update Document';
+
+  document.getElementById('docType').value = doc.type||'';
+  handleDocTypeChange();
+  document.getElementById('docName').value = doc.name||'';
+  document.getElementById('docIssue').value = doc.issue||'';
+  document.getElementById('docExpiry').value = doc.expiry||'';
+  document.getElementById('docNumber').value = doc.number||'';
+  document.getElementById('docNotes').value = doc.notes||'';
+
+  // Photo
+  if(doc.photoData){
+    docPhotoData = doc.photoData;
+    document.getElementById('docPhotoArea').style.display = 'none';
+    document.getElementById('docPhotoPreview').style.display = 'block';
+    document.getElementById('docPhotoName').textContent = 'Existing photo';
+    document.getElementById('docPhotoIcon').textContent = doc.photoData.includes('pdf') ? '📄' : '🖼️';
+  }
+
+  // Insurance
+  if(doc.insurance){
+    setTimeout(()=>{
+      const i = doc.insurance;
+      document.getElementById('insCompany').value = i.company||'';
+      document.getElementById('insPolicyType').value = i.policyType||'comprehensive';
+      document.getElementById('insIDV').value = i.idv||'';
+      document.getElementById('insPremium').value = i.premium||'';
+      document.getElementById('insNCB').value = i.ncb||0;
+      document.getElementById('insAgent').value = i.agent||'';
+      (i.addons||[]).forEach(a=>{
+        const map = {'Zero Depreciation':'addon_zerodep','Engine Protection':'addon_engine','Roadside Assistance':'addon_rsa','Consumables Cover':'addon_consumables','Return to Invoice':'addon_rti','Personal Accident':'addon_pa','Tyre Protection':'addon_tyre','Alloy Wheel Cover':'addon_alloy'};
+        const cbId = map[a]; if(cbId){ const cb=document.getElementById(cbId); if(cb) cb.checked=true; }
+      });
+    },100);
+  }
+  openSheet('addDocSheet');
 }
 
 function deleteDoc(id){
   const car = getActiveCar();
   if(!car) return;
+  if(!confirm('Delete this document? This cannot be undone.')) return;
   const docs = getCarData(car.id,'documents').filter(d=>d.id!==id);
   setCarData(car.id,'documents',docs);
   renderDocs();
   renderDashboard();
   toast('🗑️ Document deleted');
 }
+
+function viewDocPhoto(docId){
+  const car = getActiveCar();
+  if(!car) return;
+  const docs = getCarData(car.id,'documents');
+  const doc = docs.find(d=>d.id===docId);
+  if(!doc||!doc.photoData){ toast('No photo attached'); return; }
+  // Open in new tab
+  const win = window.open();
+  win.document.write(`<html><head><title>${doc.name}</title><style>body{margin:0;background:#000;display:flex;align-items:center;justify-content:center;min-height:100vh;}img{max-width:100%;max-height:100vh;}</style></head><body><img src="${doc.photoData}"><p style="color:#fff;text-align:center;font-family:sans-serif;">${doc.name}</p></body></html>`);
+}
+
+function downloadDocPhoto(docId){
+  const car = getActiveCar();
+  if(!car) return;
+  const docs = getCarData(car.id,'documents');
+  const doc = docs.find(d=>d.id===docId);
+  if(!doc||!doc.photoData){ toast('No photo attached'); return; }
+  const a = document.createElement('a');
+  a.href = doc.photoData;
+  const ext = doc.photoData.startsWith('data:application/pdf') ? 'pdf' : 'jpg';
+  a.download = `${doc.name.replace(/[^a-z0-9]/gi,'_')}.${ext}`;
+  a.click();
+  toast('📥 Downloading...');
+}
 function renderDocs(){
-  const car=getActiveCar();
+  const car = getActiveCar();
+  const noCarMsg = '<div class="empty-state"><div class="empty-icon">🚗</div><p>Add a car first</p></div>';
   if(!car){
-    document.getElementById('docList').innerHTML='<div class="empty-state"><div class="empty-icon">🚗</div><p>Add a car first</p></div>';
-    document.getElementById('insuranceSummary').innerHTML='<div class="empty-state" style="padding:16px;"><div class="empty-icon" style="font-size:28px;">🛡️</div><p style="font-size:12px;">Add a car first</p></div>';
+    const els = ['docList','insuranceSummary','expiryList'];
+    els.forEach(id=>{ const el=document.getElementById(id); if(el) el.innerHTML=noCarMsg; });
     return;
   }
-  const docs=getCarData(car.id,'documents');
 
-  // Insurance summary
-  const ins=docs.find(d=>d.type==='Insurance');
-  const insSummary=document.getElementById('insuranceSummary');
-  if(ins&&ins.insurance){
-    const i=ins.insurance;
-    const days=ins.expiry?daysFromNow(ins.expiry):null;
+  let docs = getCarData(car.id,'documents');
+  // Apply filter
+  const filterEl = document.getElementById('docFilterType');
+  const filter = filterEl ? filterEl.value : 'ALL';
+  const filtered = filter==='ALL' ? docs : docs.filter(d=>d.type===filter);
+
+  // ── Insurance Summary ──
+  const ins = docs.find(d=>d.type==='Insurance');
+  const insSummary = document.getElementById('insuranceSummary');
+  if(ins && ins.insurance){
+    const i = ins.insurance;
+    const days = ins.expiry ? daysFromNow(ins.expiry) : null;
     const coverageItems=[
-      {icon:'🚗',name:'Own Damage',desc:'Covers damage to your car',covered:i.policyType==='comprehensive'},
-      {icon:'👥',name:'Third Party',desc:'Covers damage to others',covered:true},
-      {icon:'🛡️',name:'Zero Depreciation',desc:'Full part cost reimbursement',covered:i.addons?.includes('Zero Depreciation')},
-      {icon:'🔧',name:'Engine Protection',desc:'Engine damage from flooding/oil leak',covered:i.addons?.includes('Engine Protection')},
-      {icon:'🆘',name:'Roadside Assistance',desc:'24/7 towing & emergency help',covered:i.addons?.includes('Roadside Assistance')},
-      {icon:'🧴',name:'Consumables',desc:'Oil, nuts, bolts in repair',covered:i.addons?.includes('Consumables Cover')},
-      {icon:'📄',name:'Return to Invoice',desc:'Get original invoice value',covered:i.addons?.includes('Return to Invoice')},
-      {icon:'👤',name:'Personal Accident',desc:'Driver injury/death cover',covered:i.addons?.includes('Personal Accident')},
+      {icon:'🚗',name:'Own Damage',desc:'Your car damage covered',covered:i.policyType!=='thirdparty'},
+      {icon:'👥',name:'Third Party',desc:'Damage to others',covered:true},
+      {icon:'🛡️',name:'Zero Depreciation',desc:'100% parts cost',covered:(i.addons||[]).includes('Zero Depreciation')},
+      {icon:'🔧',name:'Engine Protection',desc:'Flood / oil leak damage',covered:(i.addons||[]).includes('Engine Protection')},
+      {icon:'🆘',name:'Roadside Assistance',desc:'24/7 breakdown help',covered:(i.addons||[]).includes('Roadside Assistance')},
+      {icon:'🧴',name:'Consumables',desc:'Oil, nuts, bolts',covered:(i.addons||[]).includes('Consumables Cover')},
+      {icon:'📄',name:'Return to Invoice',desc:'Get invoice value',covered:(i.addons||[]).includes('Return to Invoice')},
+      {icon:'👤',name:'Personal Accident',desc:'Driver injury cover',covered:(i.addons||[]).includes('Personal Accident')},
+      {icon:'🔄',name:'Tyre Protection',desc:'Tyre damage cover',covered:(i.addons||[]).includes('Tyre Protection')},
+      {icon:'⭕',name:'Alloy Wheel',desc:'Alloy wheel damage',covered:(i.addons||[]).includes('Alloy Wheel Cover')},
     ];
-    insSummary.innerHTML=`
+    insSummary.innerHTML = `
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-        <div><div style="font-size:13px;font-weight:700;">${i.company||'Insurance'}</div>
-        <div style="font-size:11px;color:var(--text3);">${ins.number||'Policy #'} • ${i.policyType==='comprehensive'?'Comprehensive':'Third Party'}</div></div>
-        <span class="tag ${days!==null&&days<0?'tag-red':days!==null&&days<30?'tag-orange':'tag-green'}">${days===null?'--':days<0?'Expired':days+' days'}</span>
+        <div>
+          <div style="font-size:13px;font-weight:700;">${i.company||'Insurance'}</div>
+          <div style="font-size:11px;color:var(--text3);">${ins.number||'--'} • ${i.policyType==='comprehensive'?'Comprehensive':i.policyType==='thirdparty'?'Third Party':'Standalone OD'}</div>
+        </div>
+        <span class="tag ${days!==null&&days<0?'tag-red':days!==null&&days<30?'tag-orange':'tag-green'}">${days===null?'--':days<0?'Expired!':days+' days left'}</span>
       </div>
       <div style="display:flex;gap:12px;margin-bottom:10px;flex-wrap:wrap;">
         ${i.idv?`<div style="font-size:11px;color:var(--text3);">IDV: <strong style="color:var(--text);">₹${fmt(i.idv)}</strong></div>`:''}
         ${i.premium?`<div style="font-size:11px;color:var(--text3);">Premium: <strong style="color:var(--gold);">₹${fmt(i.premium)}/yr</strong></div>`:''}
         ${i.ncb?`<div style="font-size:11px;color:var(--text3);">NCB: <strong style="color:var(--green);">${i.ncb}%</strong></div>`:''}
+        ${i.agent?`<div style="font-size:11px;color:var(--text3);">Agent: <strong style="color:var(--text);">${i.agent}</strong></div>`:''}
       </div>
-      <div>${coverageItems.map(c=>`<div class="coverage-item">
-        <div class="coverage-icon ${c.covered?'covered':'not-covered'}">${c.icon}</div>
-        <div class="coverage-text"><h4>${c.name}</h4><p>${c.desc}</p></div>
-        <div class="coverage-status ${c.covered?'covered':'not-covered'}">${c.covered?'✓':'✗'}</div>
-      </div>`).join('')}</div>`;
-
-    // Full detail sheet
-    document.getElementById('insDetailContent').innerHTML=insSummary.innerHTML;
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
+        ${coverageItems.map(c=>`<div style="display:flex;align-items:center;gap:6px;padding:5px 8px;background:${c.covered?'rgba(0,212,170,0.06)':'rgba(255,59,48,0.04)'};border-radius:8px;">
+          <span style="font-size:14px;">${c.icon}</span>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:10px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${c.name}</div>
+            <div style="font-size:9px;color:var(--text3);">${c.desc}</div>
+          </div>
+          <span style="font-size:12px;font-weight:700;color:${c.covered?'var(--green)':'var(--red)'};">${c.covered?'✓':'✗'}</span>
+        </div>`).join('')}
+      </div>`;
+    document.getElementById('insDetailContent').innerHTML = insSummary.innerHTML;
   } else {
-    insSummary.innerHTML='<div class="empty-state" style="padding:16px;"><div class="empty-icon" style="font-size:28px;">🛡️</div><p style="font-size:12px;">Add insurance document to see coverage details</p></div>';
+    insSummary.innerHTML = '<div class="empty-state" style="padding:16px;"><div class="empty-icon" style="font-size:28px;">🛡️</div><p style="font-size:12px;">Add Insurance document to see coverage details</p></div>';
   }
 
-  // All docs
-  const docDiv=document.getElementById('docList');
-  docDiv.innerHTML=docs.length?docs.map(d=>{
-    const days=d.expiry?daysFromNow(d.expiry):null;
-    const statusTag=days===null?'':days<0?`<span class="tag tag-red">Expired</span>`:days<30?`<span class="tag tag-orange">${days}d left</span>`:`<span class="tag tag-green">${days}d left</span>`;
-    return `<div class="card" style="padding:12px;margin-bottom:8px;">
-      <div style="display:flex;align-items:center;gap:10px;">
-        <div style="font-size:26px;">${DOC_ICONS[d.type]||'📎'}</div>
-        <div style="flex:1;">
-          <div style="font-size:13px;font-weight:600;">${d.name}</div>
-          <div style="font-size:11px;color:var(--text3);">${d.type} ${d.number?'· '+d.number:''} ${d.expiry?'· Exp: '+fmtDate(d.expiry):''}</div>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">${statusTag}<button class="btn btn-danger btn-sm" style="padding:2px 8px;font-size:10px;" onclick="deleteDoc('${d.id}')">🗑️</button></div>
-      </div>
-    </div>`;
-  }).join(''):'<div class="empty-state"><div class="empty-icon">📁</div><p>No documents added</p></div>';
+  // ── Documents List ──
+  const docDiv = document.getElementById('docList');
+  if(!filtered.length){
+    docDiv.innerHTML = '<div class="empty-state"><div class="empty-icon">📁</div><p>No documents found.<br>Tap "+ Add Document" to start.</p></div>';
+  } else {
+    docDiv.innerHTML = filtered.map(d=>{
+      const days = d.expiry ? daysFromNow(d.expiry) : null;
+      const statusTag = days===null ? '' :
+        days<0  ? `<span class="tag tag-red">⚠️ Expired</span>` :
+        days<30 ? `<span class="tag tag-orange">⚡ ${days}d left</span>` :
+        days<90 ? `<span class="tag tag-gold">${days}d left</span>` :
+                  `<span class="tag tag-green">✅ ${days}d</span>`;
+      const hasPhoto = !!d.photoData;
 
-  // Expiry list
-  const expDiv=document.getElementById('expiryList');
-  const expDocs=docs.filter(d=>d.expiry).sort((a,b)=>new Date(a.expiry)-new Date(b.expiry));
-  expDiv.innerHTML=expDocs.length?expDocs.map(d=>{
-    const days=daysFromNow(d.expiry);
-    return `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);">
-      <div><div style="font-size:12px;font-weight:600;">${DOC_ICONS[d.type]||'📎'} ${d.name}</div>
-      <div style="font-size:10px;color:var(--text3);">Expires: ${fmtDate(d.expiry)}</div></div>
-      <span class="tag ${days<0?'tag-red':days<30?'tag-orange':'tag-green'}">${days<0?'Expired':days+' days'}</span>
+      return `<div style="background:var(--bg2);border:1px solid ${days!==null&&days<0?'rgba(255,59,48,0.3)':days!==null&&days<30?'rgba(255,107,0,0.3)':'var(--border)'};border-radius:var(--radius);padding:13px;margin-bottom:8px;">
+        <!-- Header row -->
+        <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;">
+          <div style="font-size:28px;flex-shrink:0;">${DOC_ICONS[d.type]||'📎'}</div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:13px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${d.name}</div>
+            <div style="font-size:10px;color:var(--text3);margin-top:2px;">${d.type}${d.number?' • '+d.number:''}</div>
+          </div>
+          <div>${statusTag}</div>
+        </div>
+        <!-- Dates row -->
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px;">
+          ${d.issue?`<div style="font-size:10px;color:var(--text3);">📅 Issue: <strong style="color:var(--text2);">${fmtDate(d.issue)}</strong></div>`:''}
+          ${d.expiry?`<div style="font-size:10px;color:var(--text3);">⏱️ Expiry: <strong style="color:${days!==null&&days<30?'var(--red)':'var(--text2)'};">${fmtDate(d.expiry)}</strong></div>`:''}
+        </div>
+        ${d.notes?`<div style="font-size:11px;color:var(--text3);background:var(--bg3);border-radius:6px;padding:6px 8px;margin-bottom:8px;">📝 ${d.notes}</div>`:''}
+        <!-- Action buttons -->
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <button class="btn btn-outline btn-sm" onclick="editDoc('${d.id}')">✏️ Edit</button>
+          ${hasPhoto ? `
+            <button class="btn btn-outline btn-sm" onclick="viewDocPhoto('${d.id}')">👁️ View</button>
+            <button class="btn btn-outline btn-sm" onclick="downloadDocPhoto('${d.id}')">📥 Download</button>
+          ` : `
+            <button class="btn btn-ghost btn-sm" style="color:var(--text3);" onclick="editDoc('${d.id}')">📷 Add Photo</button>
+          `}
+          <button class="btn btn-danger btn-sm" onclick="deleteDoc('${d.id}')">🗑️</button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  // ── Expiry Tracker ──
+  const expDiv = document.getElementById('expiryList');
+  const expDocs = docs.filter(d=>d.expiry).sort((a,b)=>new Date(a.expiry)-new Date(b.expiry));
+  expDiv.innerHTML = expDocs.length ? expDocs.map(d=>{
+    const days = daysFromNow(d.expiry);
+    const color = days<0?'var(--red)':days<30?'var(--orange)':days<90?'var(--gold)':'var(--green)';
+    return `<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="font-size:18px;">${DOC_ICONS[d.type]||'📎'}</span>
+        <div>
+          <div style="font-size:12px;font-weight:600;">${d.name}</div>
+          <div style="font-size:10px;color:var(--text3);">Expires: ${fmtDate(d.expiry)}</div>
+        </div>
+      </div>
+      <span style="font-size:11px;font-weight:700;color:${color};white-space:nowrap;">${days<0?'Expired!':days===0?'Today!':days+' days'}</span>
     </div>`;
-  }).join(''):'<div class="empty-state" style="padding:16px;"><div class="empty-icon" style="font-size:28px;">📅</div><p>No expiry dates</p></div>';
+  }).join('') : '<div class="empty-state" style="padding:16px;"><div class="empty-icon" style="font-size:28px;">📅</div><p>No expiry dates added</p></div>';
+
+  // ── Service Summary for Docs tab ──
+  const svcs = getCarData(car.id,'services');
+  const svcSummary = document.getElementById('docServiceSummary');
+  if(svcSummary){
+    if(svcs.length){
+      const total = svcs.reduce((s,x)=>s+x.bill,0);
+      svcSummary.innerHTML = `${svcs.length} service records • Total spent: <strong style="color:var(--gold);">₹${fmt(total)}</strong>`;
+    } else {
+      svcSummary.textContent = 'No service records yet';
+    }
+  }
 }
 
 // ════════════════════════════════════════
@@ -3144,6 +3446,182 @@ function switchToolTab(tab){
     if(panel) panel.style.display = t===tab?'block':'none';
     if(btn) btn.classList.toggle('active', t===tab);
   });
+}
+
+
+// ════════════════════════════════════════
+// BACKUP / RESTORE / DOWNLOAD
+// ════════════════════════════════════════
+
+function exportAllData(){
+  const cars = getCars();
+  if(!cars.length){ toast('⚠️ No data to export'); return; }
+
+  const exportData = {
+    version: 2,
+    exportDate: new Date().toISOString(),
+    appName: 'CarBillHelper',
+    cars: cars.map(car => ({
+      car,
+      services:    getCarData(car.id,'services'),
+      documents:   getCarData(car.id,'documents').map(d=>({...d, photoData: d.photoData?'[photo_attached]':null, _photoData: d.photoData})),
+      warranties:  getCarData(car.id,'warranties'),
+      parts:       DB.get(`car_${car.id}_parts`) || {}
+    }))
+  };
+
+  // Full export including photo data (may be large)
+  const fullExport = {
+    ...exportData,
+    cars: exportData.cars.map(c=>({
+      ...c,
+      documents: c.documents.map(d=>({...d, photoData: d._photoData, _photoData: undefined}))
+    }))
+  };
+
+  const json = JSON.stringify(fullExport, null, 2);
+  const blob = new Blob([json], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `CarBillHelper_Backup_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(url), 3000);
+  toast(`✅ Backup downloaded! (${cars.length} car${cars.length>1?'s':''}, all data)`);
+}
+
+function importAllData(input){
+  const file = input.files[0];
+  if(!file) return;
+  if(!file.name.endsWith('.json')){ toast('❌ Please select a .json backup file'); return; }
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const data = JSON.parse(e.target.result);
+
+      // Validate
+      if(!data.appName || data.appName !== 'CarBillHelper'){
+        toast('❌ Invalid backup file'); return;
+      }
+      if(!data.cars || !Array.isArray(data.cars)){
+        toast('❌ Backup file corrupted'); return;
+      }
+
+      const confirmMsg = `Restore backup from ${fmtDate(data.exportDate?.slice(0,10))}?
+
+This will ADD ${data.cars.length} car(s) to your existing data.
+
+Existing data will NOT be deleted.`;
+      if(!confirm(confirmMsg)) return;
+
+      let imported = 0;
+      data.cars.forEach(carData => {
+        const existingCars = getCars();
+        const exists = existingCars.find(c => c.id === carData.car.id);
+        if(!exists){
+          // Add car
+          const cars = getCars();
+          cars.push(carData.car);
+          DB.set('cars', cars);
+        }
+        // Always restore data (overwrites if exists)
+        if(carData.services) setCarData(carData.car.id, 'services', carData.services);
+        if(carData.documents) setCarData(carData.car.id, 'documents', carData.documents);
+        if(carData.warranties) setCarData(carData.car.id, 'warranties', carData.warranties);
+        if(carData.parts) DB.set(`car_${carData.car.id}_parts`, carData.parts);
+        imported++;
+      });
+
+      // Set first car as active if none
+      if(!DB.get('activeCar') && data.cars.length > 0){
+        DB.set('activeCar', data.cars[0].car.id);
+      }
+
+      input.value = '';
+      updateTopbar();
+      renderAll();
+      toast(`✅ Restored! ${imported} car(s) imported successfully.`);
+
+    } catch(err) {
+      console.error('Import error:', err);
+      toast('❌ Error reading backup file. File may be corrupted.');
+    }
+  };
+  reader.onerror = () => toast('❌ Could not read file');
+  reader.readAsText(file);
+}
+
+function downloadServiceHistory(){
+  const car = getActiveCar();
+  if(!car){ toast('⚠️ Select a car first'); return; }
+  const svcs = getCarData(car.id,'services');
+  if(!svcs.length){ toast('⚠️ No service records to download'); return; }
+
+  const sorted = [...svcs].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  const total = sorted.reduce((s,x)=>s+(x.bill||0), 0);
+
+  // Build CSV
+  const csv = [
+    ['CarBillHelper — Service History'],
+    [`Car: ${car.brand} ${car.model} (${car.year||''}) | Fuel: ${car.fuel||''} | Reg: ${car.reg||''}`],
+    [`Exported: ${new Date().toLocaleDateString('en-IN')}`],
+    [''],
+    ['Date','KM','Garage','Work Done','Type','Bill Amount (₹)','Next Service KM','Notes'],
+    ...sorted.map(s=>[
+      fmtDate(s.date)||'',
+      s.km||0,
+      `"${(s.garage||'').replace(/"/g,'""')}"`,
+      `"${(s.work||'').replace(/"/g,'""')}"`,
+      s.type||'',
+      s.bill||0,
+      s.nextKm||'',
+      `"${(s.notes||'').replace(/"/g,'""')}"`
+    ]),
+    [''],
+    [`Total Services: ${sorted.length}`, '', '', '', '', `Total Spent: ₹${fmt(total)}`]
+  ].map(row => row.join(',')).join('\n');
+
+  const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${car.brand}_${car.model}_Service_History.csv`;
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(url), 3000);
+  toast(`📥 Service history downloaded! (${sorted.length} records)`);
+}
+
+function downloadDocumentsList(){
+  const car = getActiveCar();
+  if(!car){ toast('⚠️ Select a car first'); return; }
+  const docs = getCarData(car.id,'documents');
+  if(!docs.length){ toast('⚠️ No documents to download'); return; }
+
+  const csv = [
+    ['CarBillHelper — Documents List'],
+    [`Car: ${car.brand} ${car.model} | Exported: ${new Date().toLocaleDateString('en-IN')}`],
+    [''],
+    ['Type','Document Name','Document Number','Issue Date','Expiry Date','Days Remaining','Notes'],
+    ...docs.map(d=>[
+      d.type||'',
+      `"${(d.name||'').replace(/"/g,'""')}"`,
+      `"${(d.number||'').replace(/"/g,'""')}"`,
+      fmtDate(d.issue)||'',
+      fmtDate(d.expiry)||'',
+      d.expiry ? (daysFromNow(d.expiry)<0 ? 'EXPIRED' : daysFromNow(d.expiry)+' days') : '--',
+      `"${(d.notes||'').replace(/"/g,'""')}"`
+    ])
+  ].map(r=>r.join(',')).join('\n');
+
+  const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${car.brand}_${car.model}_Documents.csv`;
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(url), 3000);
+  toast(`📥 Documents list downloaded!`);
 }
 
 function selectPart(el){
