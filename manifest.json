@@ -102,10 +102,9 @@
   ],
   "prefer_related_applications": false,
   "serviceworker": {
-    "src": "sw.js",
+    "src": "/GARAGEGPT/sw.js",
     "scope": "/GARAGEGPT/",
-    "update_via_cache": "none",
-    "type": "classic"
+    "update_via_cache": "none"
   },
   "iarc_rating_id": "",
   "display_override": [
