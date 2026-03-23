@@ -7002,7 +7002,11 @@ window.addEventListener('load', function(){
   billItems=[{id:uid(),name:'Engine Oil Change',amount:600},{id:uid(),name:'Oil Filter',amount:250}];
   renderBillItems();
   if('serviceWorker' in navigator){
-    navigator.serviceWorker.register('/GARAGEGPT/sw.js').catch(()=>{});
+    window.addEventListener('load', function(){
+      navigator.serviceWorker.register('/GARAGEGPT/sw.js', {scope: '/GARAGEGPT/'})
+        .then(reg => console.log('[GarageGPT] SW registered, scope:', reg.scope))
+        .catch(err => console.warn('[GarageGPT] SW registration failed:', err));
+    });
   }
   // Set default EMI start date to current month
   const emiStartEl = document.getElementById('emi_startdate');
