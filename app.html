@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#060608">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -72,11 +72,13 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
 .car-switcher-arrow{font-size:10px;color:var(--text3);}
 
 /* ═══ CONTENT ═══ */
-.content{flex:1;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;padding:14px 14px;padding-bottom:calc(var(--nav-h) + var(--safe-bottom) + 14px);}
+.content{flex:1;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;padding:14px 14px;padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 20px);}
 
 /* ═══ BOTTOM NAV ═══ */
 .bottom-nav{flex-shrink:0;background:rgba(6,6,8,0.98);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-  border-top:1px solid rgba(245,166,35,0.10);display:flex;height:var(--nav-h);padding-bottom:var(--safe-bottom);
+  border-top:1px solid rgba(245,166,35,0.10);display:flex;
+  height:calc(var(--nav-h) + env(safe-area-inset-bottom,0px));
+  padding-bottom:env(safe-area-inset-bottom,0px);
   box-shadow:0 -1px 20px rgba(0,0,0,0.4);}
 .nav-tab{
   flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -190,19 +192,19 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
 .gauge-info p{font-size:11px;color:var(--text3);}
 
 /* ═══ FAB ═══ */
-.fab{position:fixed;right:18px;bottom:calc(var(--nav-h) + var(--safe-bottom) + 14px);width:50px;height:50px;background:var(--gradient-gold);color:#000;border:none;border-radius:50%;font-size:22px;font-weight:400;cursor:pointer;box-shadow:0 4px 24px rgba(245,166,35,0.5),0 0 0 1px rgba(245,166,35,0.2);z-index:50;transition:all 0.2s;display:flex;align-items:center;justify-content:center;}
+.fab{position:fixed;right:18px;bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 14px);width:50px;height:50px;background:var(--gradient-gold);color:#000;border:none;border-radius:50%;font-size:22px;font-weight:400;cursor:pointer;box-shadow:0 4px 24px rgba(245,166,35,0.5),0 0 0 1px rgba(245,166,35,0.2);z-index:50;transition:all 0.2s;display:flex;align-items:center;justify-content:center;}
 .fab:hover{transform:scale(1.08) rotate(90deg);box-shadow:0 6px 30px rgba(245,166,35,0.6);}
 .fab:active{transform:scale(0.95);}
 .fab.hidden{display:none;}
 
 /* ═══ TOAST ═══ */
-#toast{position:fixed;bottom:calc(var(--nav-h) + var(--safe-bottom) + 70px);left:50%;transform:translateX(-50%) translateY(16px);background:var(--bg4);border:1px solid rgba(245,166,35,0.3);color:var(--text);padding:10px 22px;border-radius:24px;font-size:12px;font-weight:600;white-space:nowrap;opacity:0;transition:all 0.25s cubic-bezier(0.34,1.56,0.64,1);z-index:200;pointer-events:none;backdrop-filter:blur(16px);box-shadow:0 4px 20px rgba(0,0,0,0.5);}
+#toast{position:fixed;bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 70px);left:50%;transform:translateX(-50%) translateY(16px);background:var(--bg4);border:1px solid rgba(245,166,35,0.3);color:var(--text);padding:10px 22px;border-radius:24px;font-size:12px;font-weight:600;white-space:nowrap;opacity:0;transition:all 0.25s cubic-bezier(0.34,1.56,0.64,1);z-index:200;pointer-events:none;backdrop-filter:blur(16px);box-shadow:0 4px 20px rgba(0,0,0,0.5);}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
 /* ═══ SHEET (BOTTOM DRAWER) ═══ */
 .sheet-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:150;opacity:0;pointer-events:none;transition:opacity 0.3s;}
 .sheet-overlay.open{opacity:1;pointer-events:all;}
-.sheet{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-radius:22px 22px 0 0;border-top:1px solid rgba(245,166,35,0.15);padding:0 16px 24px;z-index:160;transform:translateY(100%);transition:transform 0.38s cubic-bezier(0.32,0.72,0,1);max-height:92vh;overflow-y:auto;padding-bottom:calc(24px + var(--safe-bottom));box-shadow:0 -4px 40px rgba(0,0,0,0.6);}
+.sheet{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-radius:22px 22px 0 0;border-top:1px solid rgba(245,166,35,0.15);padding:0 16px 24px;z-index:160;transform:translateY(100%);transition:transform 0.38s cubic-bezier(0.32,0.72,0,1);max-height:92vh;overflow-y:auto;padding-bottom:calc(24px + env(safe-area-inset-bottom,0px));box-shadow:0 -4px 40px rgba(0,0,0,0.6);}
 .sheet-overlay.open .sheet{transform:translateY(0);}
 .sheet-handle{width:40px;height:3px;background:rgba(255,255,255,0.15);border-radius:2px;margin:12px auto 16px;}
 .sheet-title{font-family:'Orbitron',monospace;font-size:13px;font-weight:800;color:var(--gold);margin-bottom:16px;letter-spacing:0.06em;}
@@ -237,7 +239,7 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
 .ai-msg.bot{background:var(--bg3);border:1px solid rgba(255,255,255,0.06);border-radius:14px 14px 14px 4px;align-self:flex-start;box-shadow:0 2px 8px rgba(0,0,0,0.3);}
 .ai-msg.user{background:var(--gradient-gold);color:#000;border-radius:14px 14px 4px 14px;align-self:flex-end;font-weight:600;box-shadow:0 2px 12px rgba(245,166,35,0.3);}
 .ai-msg.typing{align-self:flex-start;}
-.ai-input-row{display:flex;gap:8px;position:sticky;bottom:0;background:var(--bg);padding:8px 0;}
+.ai-input-row{display:flex;gap:8px;position:sticky;bottom:0;background:var(--bg);padding:8px 0;padding-bottom:calc(8px + env(safe-area-inset-bottom,0px));}
 .ai-input{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:10px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;}
 .ai-input:focus{border-color:var(--gold-border);}
 .ai-send{width:38px;height:38px;background:var(--gradient-gold);color:#000;border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;transition:all 0.2s;box-shadow:0 2px 10px rgba(245,166,35,0.35);}
@@ -12331,26 +12333,4 @@ function cancelBooking(id){ cancelGarageBooking(id); }
 })();
 </script>
 </body>
-</html// ════════════════════════════════════════════════════════
-// TRUSTED GARAGES DATABASE — GarageGPT Verified Network
-// ════════════════════════════════════════════════════════
-const TRUSTED_GARAGES_DB = [
-  { id:'gg001', name:'Sharma Auto Service',  city:'Indore', area:'Vijay Nagar',    dist:0.8, rating:4.8, jobs:342, verified:true,  priceLevel:2, pickup:true,  bike:false, specs:['Maruti','Hyundai','Honda','AC','Suspension'], phone:'9800000001', proofs:89,  videoRate:88, oemRate:92, responseMin:28, complaints:0 },
-  { id:'gg002', name:'Kumar Tech Garage',    city:'Indore', area:'Palasia',        dist:1.4, rating:4.6, jobs:218, verified:true,  priceLevel:2, pickup:true,  bike:false, specs:['Tata','Kia','Engine','Electrical','AC'],     phone:'9800000002', proofs:67,  videoRate:72, oemRate:85, responseMin:45, complaints:1 },
-  { id:'gg003', name:'Singh Multi-Brand',    city:'Indore', area:'Bhawarkua',      dist:2.1, rating:4.5, jobs:189, verified:true,  priceLevel:1, pickup:false, bike:true,  specs:['All brands','Tyres','Brakes','Denting'],     phone:'9800000003', proofs:45,  videoRate:60, oemRate:78, responseMin:55, complaints:0 },
-  { id:'gg004', name:'Royal Bike Studio',    city:'Indore', area:'Rajwada',        dist:1.8, rating:4.7, jobs:156, verified:true,  priceLevel:2, pickup:true,  bike:true,  specs:['RE','KTM','Yamaha','Honda','Performance'],   phone:'9800000004', proofs:53,  videoRate:82, oemRate:90, responseMin:32, complaints:0 },
-  { id:'gg005', name:'City Auto Care',       city:'Indore', area:'MG Road',        dist:3.2, rating:4.3, jobs:98,  verified:false, priceLevel:1, pickup:false, bike:false, specs:['Budget service','All cars','Oil change'],    phone:'9800000005', proofs:12,  videoRate:30, oemRate:45, responseMin:90, complaints:2 },
-  { id:'gg006', name:'Patel AC Specialist',  city:'Indore', area:'Sapna Sangeeta', dist:2.6, rating:4.6, jobs:124, verified:true,  priceLevel:2, pickup:true,  bike:false, specs:['AC Repair','Honda','Maruti','Electrical'],   phone:'9800000006', proofs:38,  videoRate:75, oemRate:88, responseMin:38, complaints:0 },
-  { id:'gg007', name:'Indore Bike Zone',     city:'Indore', area:'Geeta Bhawan',   dist:1.9, rating:4.4, jobs:87,  verified:true,  priceLevel:1, pickup:false, bike:true,  specs:['Hero','Honda','Bajaj','TVS','Chain Lube'], phone:'9800000007', proofs:21,  videoRate:55, oemRate:70, responseMin:60, complaints:1 },
-];
-
-// Compute trustScore for each garage
-TRUSTED_GARAGES_DB.forEach(g => {
-  g.trustScore = Math.min(100, Math.round(
-    Math.min(30, g.videoRate * 0.30) +
-    Math.min(25, g.oemRate   * 0.25) +
-    Math.min(25, ((g.rating - 1) / 4) * 25) +
-    Math.min(10, Math.max(0, (90 - g.responseMin) / 90) * 10) +
-    Math.min(10, Math.max(0, 10 - g.complaints) * 1)
-  ));
-});
+</html>
