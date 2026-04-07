@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#060608">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -72,13 +72,11 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
 .car-switcher-arrow{font-size:10px;color:var(--text3);}
 
 /* ═══ CONTENT ═══ */
-.content{flex:1;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;padding:14px 14px;padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 20px);}
+.content{flex:1;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;padding:14px 14px;padding-bottom:calc(var(--nav-h) + var(--safe-bottom) + 14px);}
 
 /* ═══ BOTTOM NAV ═══ */
 .bottom-nav{flex-shrink:0;background:rgba(6,6,8,0.98);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-  border-top:1px solid rgba(245,166,35,0.10);display:flex;
-  height:calc(var(--nav-h) + env(safe-area-inset-bottom,0px));
-  padding-bottom:env(safe-area-inset-bottom,0px);
+  border-top:1px solid rgba(245,166,35,0.10);display:flex;height:var(--nav-h);padding-bottom:var(--safe-bottom);
   box-shadow:0 -1px 20px rgba(0,0,0,0.4);}
 .nav-tab{
   flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -192,19 +190,19 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
 .gauge-info p{font-size:11px;color:var(--text3);}
 
 /* ═══ FAB ═══ */
-.fab{position:fixed;right:18px;bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 14px);width:50px;height:50px;background:var(--gradient-gold);color:#000;border:none;border-radius:50%;font-size:22px;font-weight:400;cursor:pointer;box-shadow:0 4px 24px rgba(245,166,35,0.5),0 0 0 1px rgba(245,166,35,0.2);z-index:50;transition:all 0.2s;display:flex;align-items:center;justify-content:center;}
+.fab{position:fixed;right:18px;bottom:calc(var(--nav-h) + var(--safe-bottom) + 14px);width:50px;height:50px;background:var(--gradient-gold);color:#000;border:none;border-radius:50%;font-size:22px;font-weight:400;cursor:pointer;box-shadow:0 4px 24px rgba(245,166,35,0.5),0 0 0 1px rgba(245,166,35,0.2);z-index:50;transition:all 0.2s;display:flex;align-items:center;justify-content:center;}
 .fab:hover{transform:scale(1.08) rotate(90deg);box-shadow:0 6px 30px rgba(245,166,35,0.6);}
 .fab:active{transform:scale(0.95);}
 .fab.hidden{display:none;}
 
 /* ═══ TOAST ═══ */
-#toast{position:fixed;bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 70px);left:50%;transform:translateX(-50%) translateY(16px);background:var(--bg4);border:1px solid rgba(245,166,35,0.3);color:var(--text);padding:10px 22px;border-radius:24px;font-size:12px;font-weight:600;white-space:nowrap;opacity:0;transition:all 0.25s cubic-bezier(0.34,1.56,0.64,1);z-index:200;pointer-events:none;backdrop-filter:blur(16px);box-shadow:0 4px 20px rgba(0,0,0,0.5);}
+#toast{position:fixed;bottom:calc(var(--nav-h) + var(--safe-bottom) + 70px);left:50%;transform:translateX(-50%) translateY(16px);background:var(--bg4);border:1px solid rgba(245,166,35,0.3);color:var(--text);padding:10px 22px;border-radius:24px;font-size:12px;font-weight:600;white-space:nowrap;opacity:0;transition:all 0.25s cubic-bezier(0.34,1.56,0.64,1);z-index:200;pointer-events:none;backdrop-filter:blur(16px);box-shadow:0 4px 20px rgba(0,0,0,0.5);}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
 /* ═══ SHEET (BOTTOM DRAWER) ═══ */
 .sheet-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:150;opacity:0;pointer-events:none;transition:opacity 0.3s;}
 .sheet-overlay.open{opacity:1;pointer-events:all;}
-.sheet{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-radius:22px 22px 0 0;border-top:1px solid rgba(245,166,35,0.15);padding:0 16px 24px;z-index:160;transform:translateY(100%);transition:transform 0.38s cubic-bezier(0.32,0.72,0,1);max-height:92vh;overflow-y:auto;padding-bottom:calc(24px + env(safe-area-inset-bottom,0px));box-shadow:0 -4px 40px rgba(0,0,0,0.6);}
+.sheet{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-radius:22px 22px 0 0;border-top:1px solid rgba(245,166,35,0.15);padding:0 16px 24px;z-index:160;transform:translateY(100%);transition:transform 0.38s cubic-bezier(0.32,0.72,0,1);max-height:92vh;overflow-y:auto;padding-bottom:calc(24px + var(--safe-bottom));box-shadow:0 -4px 40px rgba(0,0,0,0.6);}
 .sheet-overlay.open .sheet{transform:translateY(0);}
 .sheet-handle{width:40px;height:3px;background:rgba(255,255,255,0.15);border-radius:2px;margin:12px auto 16px;}
 .sheet-title{font-family:'Orbitron',monospace;font-size:13px;font-weight:800;color:var(--gold);margin-bottom:16px;letter-spacing:0.06em;}
@@ -239,7 +237,7 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
 .ai-msg.bot{background:var(--bg3);border:1px solid rgba(255,255,255,0.06);border-radius:14px 14px 14px 4px;align-self:flex-start;box-shadow:0 2px 8px rgba(0,0,0,0.3);}
 .ai-msg.user{background:var(--gradient-gold);color:#000;border-radius:14px 14px 4px 14px;align-self:flex-end;font-weight:600;box-shadow:0 2px 12px rgba(245,166,35,0.3);}
 .ai-msg.typing{align-self:flex-start;}
-.ai-input-row{display:flex;gap:8px;position:sticky;bottom:0;background:var(--bg);padding:8px 0;padding-bottom:calc(8px + env(safe-area-inset-bottom,0px));}
+.ai-input-row{display:flex;gap:8px;position:sticky;bottom:0;background:var(--bg);padding:8px 0;}
 .ai-input{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:10px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;}
 .ai-input:focus{border-color:var(--gold-border);}
 .ai-send{width:38px;height:38px;background:var(--gradient-gold);color:#000;border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;transition:all 0.2s;box-shadow:0 2px 10px rgba(245,166,35,0.35);}
@@ -558,6 +556,11 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
     <div class="page active" id="tab-dashboard">
 
       <!-- Install Banner -->
+      <div id="billCtaStrip" style="background:linear-gradient(135deg,rgba(245,166,35,0.08),rgba(255,94,31,0.04));border:1px solid rgba(245,166,35,0.2);border-radius:12px;padding:10px 14px;margin-bottom:10px;display:flex;align-items:center;gap:10px;cursor:pointer;" onclick="showTab('tools');setTimeout(()=>switchToolTab('billcheck'),100)">
+        <span style="font-size:20px;">🧾</span>
+        <div style="flex:1;"><div style="font-size:12px;font-weight:700;color:var(--gold);">Bill Check Karein</div><div style="font-size:10px;color:var(--text3);">Overcharge detect karo — free tool</div></div>
+        <span style="color:var(--gold);font-size:16px;">›</span>
+      </div>
       <div class="install-banner" id="installBanner">
         <span style="font-size:20px;">📱</span>
         <p style="font-size:12px;">Install GarageGPT on your home screen!</p>
@@ -1828,6 +1831,7 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
         </div>
 
         <div style="font-size:10px;color:var(--text3);margin-bottom:6px;" id="gar_resultCount">7 garages found</div>
+        <div id="gar_map_label" style="display:none;font-size:9px;color:var(--text3);margin-bottom:4px;"></div>
         <div id="gar_listContainer">
           <!-- Cards rendered by JS -->
         </div>
@@ -2145,18 +2149,30 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
           <!-- Car guide -->
           <div id="mgContent-car">
             <div style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:8px;">✅ New Car Delivery Checklist:</div>
-            ${[
-              ['1,000 km','Pehli free service — engine oil top-up, inspection. FREE hai!','var(--green)'],
-              ['5,000 km','Dusri free service — oil level check, all fluids, brake check. FREE!','var(--green)'],
-              ['10,000 km','Pehla paid service — engine oil + filter change. ₹2,500-4,500','var(--gold)'],
-              ['20,000 km','Air filter, spark plugs check. ₹3,000-6,000','var(--gold)'],
-              ['30,000 km','Brake fluid change, coolant check. ₹4,000-8,000','var(--orange)'],
-              ['40,000 km','Spark plugs replace, transmission fluid check. ₹6,000-12,000','var(--orange)'],
-            ].map(([km,task,color])=>`
-              <div style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);">
-                <div style="background:${color};color:#000;border-radius:6px;padding:2px 7px;font-size:10px;font-weight:700;white-space:nowrap;height:fit-content;margin-top:1px;">${km}</div>
-                <div style="font-size:11px;color:var(--text2);line-height:1.4;">${task}</div>
-              </div>`).join('')}
+            <div style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);">
+              <div style="background:var(--green);color:#000;border-radius:6px;padding:2px 7px;font-size:10px;font-weight:700;white-space:nowrap;height:fit-content;margin-top:1px;">1,000 km</div>
+              <div style="font-size:11px;color:var(--text2);line-height:1.4;">Pehli free service — engine oil top-up, inspection. FREE hai!</div>
+            </div>
+            <div style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);">
+              <div style="background:var(--green);color:#000;border-radius:6px;padding:2px 7px;font-size:10px;font-weight:700;white-space:nowrap;height:fit-content;margin-top:1px;">5,000 km</div>
+              <div style="font-size:11px;color:var(--text2);line-height:1.4;">Dusri free service — oil level check, all fluids, brake check. FREE!</div>
+            </div>
+            <div style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);">
+              <div style="background:var(--gold);color:#000;border-radius:6px;padding:2px 7px;font-size:10px;font-weight:700;white-space:nowrap;height:fit-content;margin-top:1px;">10,000 km</div>
+              <div style="font-size:11px;color:var(--text2);line-height:1.4;">Pehla paid service — engine oil + filter change. ₹2,500–4,500</div>
+            </div>
+            <div style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);">
+              <div style="background:var(--gold);color:#000;border-radius:6px;padding:2px 7px;font-size:10px;font-weight:700;white-space:nowrap;height:fit-content;margin-top:1px;">20,000 km</div>
+              <div style="font-size:11px;color:var(--text2);line-height:1.4;">Air filter, spark plugs check. ₹3,000–6,000</div>
+            </div>
+            <div style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);">
+              <div style="background:var(--orange);color:#000;border-radius:6px;padding:2px 7px;font-size:10px;font-weight:700;white-space:nowrap;height:fit-content;margin-top:1px;">30,000 km</div>
+              <div style="font-size:11px;color:var(--text2);line-height:1.4;">Brake fluid change, coolant check. ₹4,000–8,000</div>
+            </div>
+            <div style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);">
+              <div style="background:var(--orange);color:#000;border-radius:6px;padding:2px 7px;font-size:10px;font-weight:700;white-space:nowrap;height:fit-content;margin-top:1px;">40,000 km</div>
+              <div style="font-size:11px;color:var(--text2);line-height:1.4;">Spark plugs replace, transmission fluid check. ₹6,000–12,000</div>
+            </div>
             <div style="margin-top:10px;padding:8px;background:rgba(0,212,170,0.08);border-radius:8px;">
               <div style="font-size:10px;color:var(--green);font-weight:700;">💡 Pro Tips for New Car Owners:</div>
               <div style="font-size:10px;color:var(--text3);margin-top:4px;line-height:1.6;">
@@ -2171,18 +2187,30 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
           <!-- Bike guide -->
           <div id="mgContent-bike" style="display:none;">
             <div style="font-size:11px;font-weight:700;color:#FF5E1F;margin-bottom:8px;">✅ New Bike Delivery Checklist:</div>
-            ${[
-              ['500-1,000 km','Pehli free service — engine oil change (pehla oil break-in metal particles hote hain!). FREE!','var(--green)'],
-              ['3,000 km','Dusri service — oil change, chain lubrication, brake adjust. ~₹400-700','var(--green)'],
-              ['6,000 km','Air filter clean, spark plug check, tyre pressure. ~₹500-900','var(--gold)'],
-              ['9,000 km','Oil + filter change, chain tension. ~₹600-1,000','var(--gold)'],
-              ['15,000 km','Spark plug replace, air filter replace. ~₹800-1,500','var(--orange)'],
-              ['20,000 km','Chain kit check (replace if worn), brake pads check. ~₹1,000-2,500','var(--orange)'],
-            ].map(([km,task,color])=>`
-              <div style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);">
-                <div style="background:${color};color:#000;border-radius:6px;padding:2px 7px;font-size:10px;font-weight:700;white-space:nowrap;height:fit-content;margin-top:1px;">${km}</div>
-                <div style="font-size:11px;color:var(--text2);line-height:1.4;">${task}</div>
-              </div>`).join('')}
+            <div style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);">
+              <div style="background:var(--green);color:#000;border-radius:6px;padding:2px 7px;font-size:10px;font-weight:700;white-space:nowrap;height:fit-content;margin-top:1px;">500–1,000 km</div>
+              <div style="font-size:11px;color:var(--text2);line-height:1.4;">Pehli free service — engine oil change (pehla oil break-in metal particles hote hain!). FREE!</div>
+            </div>
+            <div style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);">
+              <div style="background:var(--green);color:#000;border-radius:6px;padding:2px 7px;font-size:10px;font-weight:700;white-space:nowrap;height:fit-content;margin-top:1px;">3,000 km</div>
+              <div style="font-size:11px;color:var(--text2);line-height:1.4;">Dusri service — oil change, chain lubrication, brake adjust. ~₹400–700</div>
+            </div>
+            <div style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);">
+              <div style="background:var(--gold);color:#000;border-radius:6px;padding:2px 7px;font-size:10px;font-weight:700;white-space:nowrap;height:fit-content;margin-top:1px;">6,000 km</div>
+              <div style="font-size:11px;color:var(--text2);line-height:1.4;">Air filter clean, spark plug check, tyre pressure. ~₹500–900</div>
+            </div>
+            <div style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);">
+              <div style="background:var(--gold);color:#000;border-radius:6px;padding:2px 7px;font-size:10px;font-weight:700;white-space:nowrap;height:fit-content;margin-top:1px;">9,000 km</div>
+              <div style="font-size:11px;color:var(--text2);line-height:1.4;">Oil + filter change, chain tension. ~₹600–1,000</div>
+            </div>
+            <div style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);">
+              <div style="background:var(--orange);color:#000;border-radius:6px;padding:2px 7px;font-size:10px;font-weight:700;white-space:nowrap;height:fit-content;margin-top:1px;">15,000 km</div>
+              <div style="font-size:11px;color:var(--text2);line-height:1.4;">Spark plug replace, air filter replace. ~₹800–1,500</div>
+            </div>
+            <div style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);">
+              <div style="background:var(--orange);color:#000;border-radius:6px;padding:2px 7px;font-size:10px;font-weight:700;white-space:nowrap;height:fit-content;margin-top:1px;">20,000 km</div>
+              <div style="font-size:11px;color:var(--text2);line-height:1.4;">Chain kit check (replace if worn), brake pads check. ~₹1,000–2,500</div>
+            </div>
             <div style="margin-top:10px;padding:8px;background:rgba(255,107,0,0.08);border-radius:8px;">
               <div style="font-size:10px;color:#FF5E1F;font-weight:700;">💡 Pro Tips for New Bike Owners:</div>
               <div style="font-size:10px;color:var(--text3);margin-top:4px;line-height:1.6;">
@@ -7232,6 +7260,10 @@ function buildSchedule(model, fuel, intervalKm, partsList) {
       if(km % 20000 === 0) tasks.push("🔴 Air Filter Replace");
       if(km % 20000 === 0) tasks.push("🟡 Cabin/AC Filter Replace");
       if(fuel==='Diesel' && km % 20000 === 0) tasks.push("🔴 Fuel Filter Replace (CRITICAL for diesel — protects injectors!)");
+      if(fuel==='Diesel' && km % 40000 === 0) tasks.push("🟡 DPF Check — Inspect for clogging (highway drive karke passive regen karo)");
+      if(fuel==='Diesel' && km % 15000 === 0) tasks.push("🟡 AdBlue/Urea Level Check — Refill if below 20% (₹150–200/L)");
+      if(fuel==='Diesel' && km % 80000 === 0) tasks.push("🔴 Diesel Injectors Clean/Test (₹2,000–4,000 — avoid ₹30k+ injector damage)");
+      if(fuel==='Diesel' && km % 80000 === 0) tasks.push("🟡 Turbocharger Vanes Inspect + Clean");
       if(fuel!=='Diesel' && km % 30000 === 0) tasks.push("🟡 Fuel Filter Replace");
       if(km % 30000 === 0) tasks.push("🔴 Brake Fluid Replace");
       if(km % 40000 === 0) tasks.push(fuel==='Diesel'?"🟡 Glow Plugs Check":"🔴 Spark Plugs Replace");
@@ -7437,13 +7469,435 @@ function showOfficialSchedule(){
   renderScheduleHTML(div, brand, model, fuel, km, scheduleData, false);
 }
 
+// ═══════════════════════════════════════════════════════════════
+// FUEL-SPECIFIC DETAILED MAINTENANCE GUIDE
+// Diesel (DPF/Urea/Injectors), Petrol, EV, CNG, Hybrid
+// ═══════════════════════════════════════════════════════════════
+function buildFuelGuideHTML(fuel, brand, model) {
+  const f = fuel.toLowerCase();
+
+  // ── DIESEL ──────────────────────────────────────────────────
+  if(f === 'diesel') {
+    return `
+    <div style="background:linear-gradient(135deg,rgba(255,183,0,0.07),rgba(255,94,31,0.04));border:1px solid rgba(255,183,0,0.25);border-radius:14px;padding:14px;margin-bottom:12px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+        <div style="width:36px;height:36px;background:rgba(255,183,0,0.15);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">⛽</div>
+        <div>
+          <div style="font-family:'Orbitron',monospace;font-size:12px;font-weight:700;color:#FFB700;">DIESEL ENGINE — SPECIAL CARE GUIDE</div>
+          <div style="font-size:10px;color:var(--text3);margin-top:1px;">DPF · Urea/AdBlue · Injectors · Glow Plugs · Turbo</div>
+        </div>
+      </div>
+
+      <!-- DPF Section -->
+      <div style="background:var(--bg3);border:1px solid rgba(255,59,48,0.2);border-radius:10px;padding:11px;margin-bottom:9px;">
+        <div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:7px;">🔴 DPF — Diesel Particulate Filter</div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.8;">
+          <strong style="color:var(--text);">Kya hai?</strong> DPF exhaust soot ko filter karta hai — BS6 diesel cars mein mandatory hai.<br/>
+          <strong style="color:var(--text);">Problem:</strong> City driving (short trips) mein DPF fully regenerate nahi hota → clog ho jaata hai.<br/>
+          <strong style="color:var(--text);">Warning signs:</strong> Engine warning light 🔴, power loss, rough idle, smoke<br/>
+          <strong style="color:var(--text);">Fix:</strong> Highway pe 30–40 min drive karo 2,000 RPM+ pe → passive regeneration<br/>
+          <strong style="color:var(--text);">Professional cleaning:</strong> Har 40,000–60,000 km → ₹3,000–8,000<br/>
+          <strong style="color:var(--text);">DPF Replace:</strong> ₹40,000–1,20,000 (avoid karo — proper care se 2 lakh km tak chalta hai)
+        </div>
+        <div style="background:rgba(255,59,48,0.06);border-radius:7px;padding:8px;margin-top:7px;">
+          <div style="font-size:10px;color:var(--red);font-weight:700;margin-bottom:4px;">⛔ DPF Damage Karne Wali Galtiyan:</div>
+          <div style="font-size:10px;color:var(--text3);line-height:1.7;">
+            ❌ Wrong engine oil use karna (non-DPF compatible oil — LOW SAPS oil use karo: 5W-30 C3/C2)<br/>
+            ❌ Sirf city mein chalaana — weekly ek highway run zaroor karo<br/>
+            ❌ DPF warning light ignore karna<br/>
+            ❌ Engine flush chemicals — DPF ko damage kar sakte hain<br/>
+            ❌ Cheap duplicate oil filters
+          </div>
+        </div>
+      </div>
+
+      <!-- Urea / AdBlue Section (SCR) -->
+      <div style="background:var(--bg3);border:1px solid rgba(74,158,255,0.2);border-radius:10px;padding:11px;margin-bottom:9px;">
+        <div style="font-size:11px;font-weight:700;color:var(--blue);margin-bottom:7px;">🔵 AdBlue / Urea (DEF — Diesel Exhaust Fluid)</div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.8;">
+          <strong style="color:var(--text);">Kya hai?</strong> SCR system mein urea solution inject hota hai → NOx emissions reduce karta hai (BS6 mandate)<br/>
+          <strong style="color:var(--text);">Kitna lagta hai?</strong> ~1 liter per 500–700 km (varies by brand)<br/>
+          <strong style="color:var(--text);">Refill frequency:</strong> Har 10,000–15,000 km pe refill (ya jab warning aaye)<br/>
+          <strong style="color:var(--text);">Cost:</strong> ₹150–200 per liter (Original BASF AdBlue use karo — duplicate se SCR damage)<br/>
+          <strong style="color:var(--text);">Warning:</strong> AdBlue khatam → car speed-limit mode mein aa jaati hai → phir start bhi nahi hogi!<br/>
+          <strong style="color:var(--text);">Cars with AdBlue:</strong> Hyundai Creta/Tucson Diesel, Kia Seltos/Carens, Mahindra XUV700, Thar, Scorpio N, MG Hector, BMW/Mercedes/Audi diesel
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:7px;">
+          <div style="background:rgba(74,158,255,0.06);border-radius:7px;padding:7px;text-align:center;">
+            <div style="font-size:14px;font-weight:700;color:var(--blue);">~15,000 km</div>
+            <div style="font-size:9px;color:var(--text3);">Avg. refill interval</div>
+          </div>
+          <div style="background:rgba(74,158,255,0.06);border-radius:7px;padding:7px;text-align:center;">
+            <div style="font-size:14px;font-weight:700;color:var(--blue);">₹150–200/L</div>
+            <div style="font-size:9px;color:var(--text3);">BASF genuine AdBlue</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fuel Filter — MOST CRITICAL -->
+      <div style="background:var(--bg3);border:1px solid rgba(245,166,35,0.3);border-radius:10px;padding:11px;margin-bottom:9px;">
+        <div style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:7px;">🟡 Fuel Filter — Diesel Ka Sabse Critical Part</div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.8;">
+          <strong style="color:var(--red);">Replace EVERY 20,000 km — NO EXCEPTIONS!</strong><br/>
+          Choked fuel filter → injector damage → ₹30,000–80,000 per injector repair<br/>
+          <strong style="color:var(--text);">Water separator:</strong> Drain karo har 10,000 km pe (manual drain plug hota hai)<br/>
+          <strong style="color:var(--text);">Cost to replace:</strong> ₹500–1,500 (part) + ₹300–500 labour → 5 minute ka kaam
+        </div>
+      </div>
+
+      <!-- Diesel Injectors -->
+      <div style="background:var(--bg3);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:11px;margin-bottom:9px;">
+        <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:7px;">💉 Common Rail Diesel Injectors</div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.8;">
+          <strong style="color:var(--text);">Clean/Test:</strong> Har 80,000–1,00,000 km → ₹2,000–4,000<br/>
+          <strong style="color:var(--text);">Replace:</strong> ₹8,000–20,000 per injector (4 cylinder = 4 injectors!)<br/>
+          <strong style="color:var(--text);">Symptoms of bad injectors:</strong> Rough idle, black smoke, poor mileage, hard start<br/>
+          <strong style="color:var(--text);">Prevention:</strong> Good quality diesel + fuel filter replace on time + avoid low-tank driving
+        </div>
+      </div>
+
+      <!-- Turbo -->
+      <div style="background:var(--bg3);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:11px;margin-bottom:9px;">
+        <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:7px;">🌀 Turbocharger Care</div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.8;">
+          <strong style="color:var(--text);">Cool-down rule:</strong> Engine off karne se pehle 1–2 min idle chalao (turbo timer mental habit banao)<br/>
+          <strong style="color:var(--text);">Oil quality:</strong> Turbo-specified oil hi use karo — cheap oil = turbo bearing failure<br/>
+          <strong style="color:var(--text);">Replace:</strong> ₹20,000–80,000 (depends on car) — avoid karke chalo!<br/>
+          <strong style="color:var(--text);">Inspect:</strong> Har 40,000 km pe turbo vanes check (VGT turbo mein)
+        </div>
+      </div>
+
+      <!-- Glow Plugs -->
+      <div style="background:var(--bg3);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:11px;">
+        <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:7px;">🔌 Glow Plugs</div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.8;">
+          Diesel ignition ke liye glow plugs heat provide karte hain (spark plugs nahi hote!)<br/>
+          <strong style="color:var(--text);">Check/Replace:</strong> Har 60,000–80,000 km → ₹500–1,500 each<br/>
+          <strong style="color:var(--text);">Symptoms when failing:</strong> Hard cold start, white smoke on startup, rough idle in winter
+        </div>
+      </div>
+    </div>`;
+  }
+
+  // ── PETROL ──────────────────────────────────────────────────
+  if(f === 'petrol') {
+    return `
+    <div style="background:linear-gradient(135deg,rgba(255,94,31,0.07),rgba(245,166,35,0.04));border:1px solid rgba(255,94,31,0.22);border-radius:14px;padding:14px;margin-bottom:12px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+        <div style="width:36px;height:36px;background:rgba(255,94,31,0.12);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">⛽</div>
+        <div>
+          <div style="font-family:'Orbitron',monospace;font-size:12px;font-weight:700;color:var(--orange);">PETROL ENGINE — COMPLETE CARE GUIDE</div>
+          <div style="font-size:10px;color:var(--text3);margin-top:1px;">Spark Plugs · CVVT · Throttle Body · Timing Chain</div>
+        </div>
+      </div>
+
+      <!-- Spark Plugs -->
+      <div style="background:var(--bg3);border:1px solid rgba(245,166,35,0.2);border-radius:10px;padding:11px;margin-bottom:9px;">
+        <div style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:7px;">⚡ Spark Plugs — Types & Intervals</div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.8;">
+          <strong style="color:var(--text);">Normal (Copper/Nickel):</strong> Replace every 20,000–30,000 km → ₹100–300 each<br/>
+          <strong style="color:var(--text);">Platinum:</strong> Replace every 40,000–60,000 km → ₹300–600 each<br/>
+          <strong style="color:var(--text);">Iridium:</strong> Replace every 80,000–1,00,000 km → ₹600–1,200 each (best choice!)<br/>
+          <strong style="color:var(--text);">Symptoms:</strong> Rough idle, poor mileage, hard start, engine misfire (check engine light)<br/>
+          <strong style="color:var(--text);">Pro tip:</strong> Always use OEM grade or better — never compromise on spark plugs!
+        </div>
+        <div style="background:rgba(245,166,35,0.06);border-radius:7px;padding:7px;margin-top:7px;font-size:10px;color:var(--text3);">
+          💡 Iridium plugs thode maheenge hain lekin 3x zyada chalte hain — long run mein sasta!
+        </div>
+      </div>
+
+      <!-- Engine Oil -->
+      <div style="background:var(--bg3);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:11px;margin-bottom:9px;">
+        <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:7px;">🛢️ Engine Oil — Grade Selection</div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.8;">
+          <strong style="color:var(--text);">Normal petrol (non-turbo):</strong> 10W-30 or 5W-30 (SN/SP grade) — Every 10,000 km<br/>
+          <strong style="color:var(--text);">Turbo petrol:</strong> 0W-20 or 5W-30 Fully Synthetic MANDATORY — Every 7,500–10,000 km<br/>
+          <strong style="color:var(--text);">Direct Injection (TGDI/GDI):</strong> Use oil with Low-SAPS spec to protect injectors<br/>
+          <strong style="color:var(--text);">Recommended brands:</strong> Motul, Shell Helix, Castrol Magnatec, Gulf Formula
+        </div>
+      </div>
+
+      <!-- Throttle Body & IACV -->
+      <div style="background:var(--bg3);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:11px;margin-bottom:9px;">
+        <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:7px;">🔧 Throttle Body & Carbon Deposits</div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.8;">
+          <strong style="color:var(--text);">Direct Injection (GDI) engines:</strong> Carbon deposits on intake valves — cleaning every 50,000 km → ₹3,000–8,000<br/>
+          <strong style="color:var(--text);">Throttle body cleaning:</strong> Only when symptoms appear (rough idle, hesitation) — NOT routine!<br/>
+          <strong style="color:var(--text);">Fuel injector cleaning:</strong> Every 60,000–80,000 km if mileage drops → ₹1,500–4,000<br/>
+          <strong style="color:var(--text);">Do NOT:</strong> Let mechanic do throttle body cleaning as "routine" — it's a scam unless symptoms present
+        </div>
+      </div>
+
+      <!-- Timing Belt vs Chain -->
+      <div style="background:var(--bg3);border:1px solid rgba(255,59,48,0.2);border-radius:10px;padding:11px;margin-bottom:9px;">
+        <div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:7px;">⛓️ Timing Belt vs Timing Chain — Critical Difference</div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.8;">
+          <strong style="color:var(--red);">Timing BELT:</strong> Replace every 60,000–80,000 km or 5 years (whichever is first!) — NEVER ignore!<br/>
+          Belt snap = engine total failure → ₹50,000–2,00,000 repair. Replace with water pump together!<br/>
+          <strong style="color:var(--text);">Timing CHAIN:</strong> Lifetime part — only inspect, usually no replace needed until 1,50,000+ km<br/>
+          <strong style="color:var(--text);">How to check yours:</strong> Owner's manual → Service schedule mein "Cam belt" ya "timing belt" = belt engine
+        </div>
+      </div>
+
+      <!-- CVVT / VVT -->
+      <div style="background:var(--bg3);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:11px;">
+        <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:7px;">⚙️ CVVT / VVT System</div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.8;">
+          Most modern petrol engines (Hyundai, Kia, Maruti Turbo) mein CVVT/VVT hai<br/>
+          <strong style="color:var(--text);">Care:</strong> Timely oil change hi best maintenance hai — CVVT oil pressure pe dependent hai<br/>
+          <strong style="color:var(--text);">Symptoms of VVT issues:</strong> Engine rattle on startup, poor performance, timing codes<br/>
+          <strong style="color:var(--text);">Prevention:</strong> Never use low-quality oil + never extend oil change interval
+        </div>
+      </div>
+    </div>`;
+  }
+
+  // ── ELECTRIC (EV) ────────────────────────────────────────────
+  if(f === 'electric') {
+    return `
+    <div style="background:linear-gradient(135deg,rgba(0,200,150,0.07),rgba(74,158,255,0.04));border:1px solid rgba(0,200,150,0.25);border-radius:14px;padding:14px;margin-bottom:12px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+        <div style="width:36px;height:36px;background:rgba(0,200,150,0.12);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">⚡</div>
+        <div>
+          <div style="font-family:'Orbitron',monospace;font-size:12px;font-weight:700;color:var(--green);">ELECTRIC VEHICLE — COMPLETE CARE GUIDE</div>
+          <div style="font-size:10px;color:var(--text3);margin-top:1px;">Battery · Charging · Regeneration · Tyres · Software</div>
+        </div>
+      </div>
+
+      <!-- Battery Care -->
+      <div style="background:var(--bg3);border:1px solid rgba(0,200,150,0.2);border-radius:10px;padding:11px;margin-bottom:9px;">
+        <div style="font-size:11px;font-weight:700;color:var(--green);margin-bottom:7px;">🔋 Battery Health — Most Important!</div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.8;">
+          <strong style="color:var(--text);">Ideal charge range:</strong> 20% to 80% for daily use (avoid 0–100% regularly)<br/>
+          <strong style="color:var(--text);">Full charge (100%):</strong> Sirf long trips ke liye — daily 80% par rok lo<br/>
+          <strong style="color:var(--text);">Never below 10%:</strong> Deep discharge se battery degradation fast hoti hai<br/>
+          <strong style="color:var(--text);">Parking:</strong> Long parking (10+ din) mein 50% charge pe rako<br/>
+          <strong style="color:var(--text);">Battery degradation:</strong> Typical 2–3% per year → 10 saal mein ~80% capacity normal hai<br/>
+          <strong style="color:var(--text);">Warranty:</strong> Most brands 8 year / 1,60,000 km battery warranty dete hain (India)
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px;">
+          <div style="background:rgba(0,200,150,0.06);border-radius:7px;padding:7px;text-align:center;">
+            <div style="font-size:13px;font-weight:700;color:var(--green);">20–80%</div>
+            <div style="font-size:9px;color:var(--text3);">Daily ideal range</div>
+          </div>
+          <div style="background:rgba(245,166,35,0.06);border-radius:7px;padding:7px;text-align:center;">
+            <div style="font-size:13px;font-weight:700;color:var(--gold);">50%</div>
+            <div style="font-size:9px;color:var(--text3);">Long storage level</div>
+          </div>
+          <div style="background:rgba(255,59,48,0.06);border-radius:7px;padding:7px;text-align:center;">
+            <div style="font-size:13px;font-weight:700;color:var(--red);">&lt;10%</div>
+            <div style="font-size:9px;color:var(--text3);">Never go below</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charging Guide -->
+      <div style="background:var(--bg3);border:1px solid rgba(74,158,255,0.2);border-radius:10px;padding:11px;margin-bottom:9px;">
+        <div style="font-size:11px;font-weight:700;color:var(--blue);margin-bottom:7px;">🔌 Charging — Types & Best Practices</div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.8;">
+          <strong style="color:var(--text);">Level 1 (3.3kW Home AC):</strong> Raat bhar charge — best for battery health, daily use<br/>
+          <strong style="color:var(--text);">Level 2 (7.2–22kW AC Fast):</strong> 2–4 hrs — okay for daily use<br/>
+          <strong style="color:var(--text);">DC Fast Charge (50–150kW):</strong> 30–45 min to 80% — occasional use only! Daily DC fast charge se battery degradation badhti hai<br/>
+          <strong style="color:var(--text);">Best habit:</strong> Home pe slow charge overnight → office pe DC fast only when needed<br/>
+          <strong style="color:var(--text);">Charger quality:</strong> Only BIS-certified chargers use karo (brand authorized preferred)
+        </div>
+      </div>
+
+      <!-- Regenerative Braking -->
+      <div style="background:var(--bg3);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:11px;margin-bottom:9px;">
+        <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:7px;">🔄 Regenerative Braking — Range Badhao</div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.8;">
+          <strong style="color:var(--text);">Use highest regen mode in city:</strong> Brake pads virtually kabhi wear nahi hote!<br/>
+          <strong style="color:var(--text);">Brake pads:</strong> EVs mein 2–3x zyada chalte hain vs petrol — inspect every 60,000 km<br/>
+          <strong style="color:var(--text);">Brake fluid:</strong> Still needs change every 2 years (hygroscopic — absorbs moisture)<br/>
+          <strong style="color:var(--text);">One-pedal driving:</strong> Range 10–15% improve hoti hai city mein
+        </div>
+      </div>
+
+      <!-- EV Maintenance Checklist -->
+      <div style="background:var(--bg3);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:11px;margin-bottom:9px;">
+        <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:7px;">📋 EV Service Schedule (simplified)</div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.8;">
+          <strong style="color:var(--gold);">Every 15,000 km:</strong> Tyre rotation + pressure, brake inspection, coolant (battery loop) check<br/>
+          <strong style="color:var(--gold);">Every 30,000 km:</strong> Cabin AC filter replace, 12V aux battery check, full system scan<br/>
+          <strong style="color:var(--gold);">Every 2 years:</strong> Brake fluid replace (mandatory — regen se brakes kam use hote hain but fluid still degrades!)<br/>
+          <strong style="color:var(--gold);">Every 40,000 km:</strong> Coolant (traction battery cooling loop) top-up/check<br/>
+          <strong style="color:var(--gold);">Annually:</strong> Software OTA update check, battery BMS diagnostics
+        </div>
+      </div>
+
+      <!-- EV Don'ts -->
+      <div style="background:rgba(255,59,48,0.04);border:1px solid rgba(255,59,48,0.18);border-radius:10px;padding:11px;">
+        <div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:7px;">⛔ EV ke liye Kya BILKUL Mat Karo</div>
+        <div style="font-size:10px;color:var(--text3);line-height:1.9;">
+          ❌ Daily 100% tak charge mat karo<br/>
+          ❌ DC fast charge ko routine mat banao<br/>
+          ❌ 0% tak discharge mat karo<br/>
+          ❌ Garmi mein car ko direct sunlight mein park mat karo (battery heat stress)<br/>
+          ❌ Non-brand chargers ya local adapters use mat karo<br/>
+          ❌ Battery mein koi modification / replacement authorized service ke bina mat karo<br/>
+          ❌ Car wash mein high pressure water engine bay mein mat daalo
+        </div>
+      </div>
+    </div>`;
+  }
+
+  // ── CNG ──────────────────────────────────────────────────────
+  if(f === 'cng') {
+    return `
+    <div style="background:linear-gradient(135deg,rgba(0,200,83,0.07),rgba(0,150,100,0.04));border:1px solid rgba(0,200,83,0.25);border-radius:14px;padding:14px;margin-bottom:12px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+        <div style="width:36px;height:36px;background:rgba(0,200,83,0.12);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🟢</div>
+        <div>
+          <div style="font-family:'Orbitron',monospace;font-size:12px;font-weight:700;color:#00C853;">CNG VEHICLE — COMPLETE CARE GUIDE</div>
+          <div style="font-size:10px;color:var(--text3);margin-top:1px;">Cylinder · Regulator · Spark Plugs · Safety · ARAI Compliance</div>
+        </div>
+      </div>
+
+      <!-- Cylinder — MOST CRITICAL -->
+      <div style="background:var(--bg3);border:1px solid rgba(255,59,48,0.25);border-radius:10px;padding:11px;margin-bottom:9px;">
+        <div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:7px;">⚠️ CNG Cylinder — LEGAL & SAFETY REQUIREMENT</div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.8;">
+          <strong style="color:var(--red);">Fitness Test (Hydrostatic Test):</strong> MANDATORY every 3 years by law (Motor Vehicles Act)<br/>
+          <strong style="color:var(--text);">Test cost:</strong> ₹1,500–3,000 (authorized CNG testing station pe)<br/>
+          <strong style="color:var(--text);">Cylinder life:</strong> 15–20 years maximum — phir replace karna padega<br/>
+          <strong style="color:var(--text);">Replace cost:</strong> ₹8,000–20,000 (cylinder size per)<br/>
+          <strong style="color:var(--red);">⚠️ NEVER:</strong> Test ke bina chalana illegal hai + insurance claim reject ho sakta hai accident mein!<br/>
+          <strong style="color:var(--text);">Visual check:</strong> Har 6 months mein cylinder pe rust, dents, bulges check karo
+        </div>
+        <div style="background:rgba(255,59,48,0.06);border-radius:7px;padding:8px;margin-top:7px;">
+          <div style="font-size:10px;color:var(--red);font-weight:700;">🚨 Cylinder ki Expiry Date Zaroor Check Karo!</div>
+          <div style="font-size:10px;color:var(--text3);margin-top:3px;">Cylinder pe manufacturing date hoti hai → last test date sticker chahiye. Expire hai toh gaadi chalana ILLEGAL.</div>
+        </div>
+      </div>
+
+      <!-- Spark Plugs for CNG -->
+      <div style="background:var(--bg3);border:1px solid rgba(245,166,35,0.2);border-radius:10px;padding:11px;margin-bottom:9px;">
+        <div style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:7px;">⚡ Spark Plugs — CNG Mein IRIDIUM Mandatory</div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.8;">
+          <strong style="color:var(--red);">CNG mein normal copper plugs NAHI chalenge!</strong> CNG petrol se zyada temperature generate karta hai → normal plugs jaldi khatam<br/>
+          <strong style="color:var(--text);">Use karo:</strong> Iridium ya Platinum spark plugs ONLY<br/>
+          <strong style="color:var(--text);">Interval:</strong> Every 20,000 km (petrol ke 30,000 km vs CNG ki 20,000 km)<br/>
+          <strong style="color:var(--text);">Gap:</strong> 0.6–0.7mm (slightly tighter than petrol — check owner manual)<br/>
+          <strong style="color:var(--text);">Cost:</strong> ₹600–1,200 per plug (4 cylinders = ₹2,400–4,800)
+        </div>
+      </div>
+
+      <!-- CNG Kit Components -->
+      <div style="background:var(--bg3);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:11px;margin-bottom:9px;">
+        <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:7px;">🔩 CNG Kit Components — Service Schedule</div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.8;">
+          <strong style="color:var(--gold);">CNG Filter:</strong> Replace every 10,000–15,000 km → ₹200–500 (protect karta hai regulator ko)<br/>
+          <strong style="color:var(--gold);">Pressure Regulator (Reducer):</strong> Service every 30,000 km, replace 60,000–80,000 km → ₹2,000–5,000<br/>
+          <strong style="color:var(--gold);">High-pressure hose:</strong> Inspect every 20,000 km → Replace if cracked/worn → ₹500–1,500<br/>
+          <strong style="color:var(--gold);">Injector Rail (Sequential kit):</strong> Clean every 40,000 km<br/>
+          <strong style="color:var(--gold);">Electronic control unit:</strong> Check every 30,000 km — software calibration needed
+        </div>
+      </div>
+
+      <!-- Engine Oil for CNG -->
+      <div style="background:var(--bg3);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:11px;margin-bottom:9px;">
+        <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:7px;">🛢️ Engine Oil for CNG Cars</div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.8;">
+          <strong style="color:var(--text);">Interval:</strong> Every 7,500 km (NOT 10,000 km like petrol!) — CNG engine zyada heat generate karta hai<br/>
+          <strong style="color:var(--text);">Grade:</strong> 10W-30 or 15W-40 semi-synthetic (CNG engine pistons ko thoda thicker oil chahiye)<br/>
+          <strong style="color:var(--text);">Caution:</strong> Fully synthetic 0W-20 CNG ke liye avoid karo — ring sealing issue<br/>
+          <strong style="color:var(--text);">Why shorter interval?</strong> CNG combustion temperature zyada → oil jaldi oxidize hota hai
+        </div>
+      </div>
+
+      <!-- Safety -->
+      <div style="background:rgba(255,59,48,0.04);border:1px solid rgba(255,59,48,0.18);border-radius:10px;padding:11px;">
+        <div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:7px;">🚨 CNG Safety — Ye Kabhi Mat Bhulo</div>
+        <div style="font-size:10px;color:var(--text3);line-height:1.9;">
+          ❌ Underground parking mein CNG car khadi mat karo (gas leak risk)<br/>
+          ❌ Cylinder ke paas koi bhi electrical work unauthorized mat karo<br/>
+          ❌ CNG mode mein start mat karo (pehle petrol pe start, phir CNG switch karo manually)<br/>
+          ❌ Gas smell aaye toh car se bahar niklo, windows kholo, ignition off karo<br/>
+          ✅ Car mein CNG-approved fire extinguisher rakho<br/>
+          ✅ Filling station pe engine band karo, mobile phone pocket mein rakho<br/>
+          ✅ Only ARAI-certified CNG kit use karo (aftermarket kit se insurance void)
+        </div>
+      </div>
+    </div>`;
+  }
+
+  // ── HYBRID ───────────────────────────────────────────────────
+  if(f === 'hybrid') {
+    return `
+    <div style="background:linear-gradient(135deg,rgba(157,127,234,0.07),rgba(74,158,255,0.04));border:1px solid rgba(157,127,234,0.25);border-radius:14px;padding:14px;margin-bottom:12px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+        <div style="width:36px;height:36px;background:rgba(157,127,234,0.12);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">♻️</div>
+        <div>
+          <div style="font-family:'Orbitron',monospace;font-size:12px;font-weight:700;color:var(--purple);">HYBRID VEHICLE — COMPLETE CARE GUIDE</div>
+          <div style="font-size:10px;color:var(--text3);margin-top:1px;">HV Battery · Regeneration · Oil Grade · e-CVT</div>
+        </div>
+      </div>
+
+      <!-- HV Battery -->
+      <div style="background:var(--bg3);border:1px solid rgba(157,127,234,0.2);border-radius:10px;padding:11px;margin-bottom:9px;">
+        <div style="font-size:11px;font-weight:700;color:var(--purple);margin-bottom:7px;">🔋 HV Battery (High Voltage Traction Battery)</div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.8;">
+          <strong style="color:var(--text);">Self-maintaining:</strong> Hybrid battery khud ko manage karti hai — aapko charge nahi karna<br/>
+          <strong style="color:var(--text);">Warranty:</strong> Toyota/Maruti = 8 years / 1,60,000 km battery warranty<br/>
+          <strong style="color:var(--text);">Life:</strong> 15–20 years typical (HV battery EV se zyada life leti hai kyunki full charge/discharge nahi hoti)<br/>
+          <strong style="color:var(--text);">Replace cost:</strong> ₹1,50,000–3,50,000 (premium hybrids) — but rarely needed<br/>
+          <strong style="color:var(--text);">HV Battery cooling:</strong> AC filter clean rakho → HV battery cooling air cabin AC se aati hai!
+        </div>
+      </div>
+
+      <!-- Engine Oil — CRITICAL -->
+      <div style="background:var(--bg3);border:1px solid rgba(245,166,35,0.25);border-radius:10px;padding:11px;margin-bottom:9px;">
+        <div style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:7px;">🛢️ Engine Oil — Hybrid Mein MOST CRITICAL</div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.8;">
+          <strong style="color:var(--red);">ONLY manufacturer specified grade use karo — ZERO compromise!</strong><br/>
+          <strong style="color:var(--text);">Toyota/Maruti Hybrid:</strong> 0W-16 Fully Synthetic (Toyota Genuine / Mobil 1 0W-16 only)<br/>
+          <strong style="color:var(--text);">Honda City Hybrid:</strong> 0W-20 Fully Synthetic<br/>
+          <strong style="color:var(--text);">Why so strict?</strong> Hybrid engine frequently on/off karta hai → cold start wear zyada → low viscosity MUST<br/>
+          <strong style="color:var(--text);">Wrong oil:</strong> Engine efficiency drop + potential damage<br/>
+          <strong style="color:var(--text);">Interval:</strong> Every 10,000 km (oil life monitor bhi dekho)
+        </div>
+      </div>
+
+      <!-- Brake System -->
+      <div style="background:var(--bg3);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:11px;margin-bottom:9px;">
+        <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:7px;">🛑 Brake System — Hybrid Specific</div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.8;">
+          <strong style="color:var(--text);">Brake pads:</strong> Regen braking ki wajah se 2–3x zyada chalte hain (60,000–80,000 km+ typical)<br/>
+          <strong style="color:var(--text);">Brake fluid:</strong> Still replace every 2 years — regen se pads use nahi hote but fluid degrades<br/>
+          <strong style="color:var(--text);">Brake bleeding:</strong> Requires special procedure hybrid mein (electric brake booster) — authorized only<br/>
+          <strong style="color:var(--text);">Brake pedal feel:</strong> Hybrid ka brake pedal thoda alag feel karta hai (normal hai)
+        </div>
+      </div>
+
+      <!-- e-CVT / Transaxle -->
+      <div style="background:var(--bg3);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:11px;">
+        <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:7px;">⚙️ e-CVT / Power Split Transaxle</div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.8;">
+          Toyota/Maruti hybrid mein traditional gearbox nahi hai — power split device hai<br/>
+          <strong style="color:var(--text);">Maintenance:</strong> Almost zero — no clutch, no traditional gearbox fluid (in most cases)<br/>
+          <strong style="color:var(--text);">Transaxle fluid:</strong> Some models mein 40,000 km pe check recommended<br/>
+          <strong style="color:var(--text);">DO NOT:</strong> Push start, flat tow (always flatbed) — electric motors damage ho sakte hain<br/>
+          <strong style="color:var(--text);">Inverter coolant:</strong> Check every 40,000 km (separate from engine coolant)
+        </div>
+      </div>
+    </div>`;
+  }
+
+  return ''; // No guide for unknown fuel types
+}
+
 function renderScheduleHTML(div, brand, model, fuel, userKm, schedule, isGeneric){
   let html = `<div class="card" style="margin-bottom:12px;background:linear-gradient(135deg,rgba(255,215,0,0.06),rgba(255,107,0,0.04));border-color:var(--gold-border);">
     <div style="font-family:'Orbitron',monospace;font-size:12px;font-weight:700;color:var(--gold);">${brand} ${model}</div>
     <div style="font-size:11px;color:var(--text3);margin-top:2px;">Fuel: ${fuel} ${isGeneric?'| Based on manufacturer guidelines':'| Official Schedule'} ${userKm?'| Current: '+fmt(userKm)+' km':''}</div>
   </div>`;
 
-  // Warnings
+  // ══ FUEL-SPECIFIC DETAILED GUIDE ══
+  const fuelGuide = buildFuelGuideHTML(fuel, brand, model);
+  html += fuelGuide;
+
+  // Warnings (kept short — details now in guide above)
   if(fuel==='Diesel') html+=`<div class="alert alert-warn" style="margin-bottom:10px;"><span>⚠️</span><span style="font-size:11px;"><strong>Diesel owners:</strong> Fuel filter is MOST critical — never skip! Injector damage = ₹30,000–80,000</span></div>`;
   if(fuel==='CNG') html+=`<div class="alert alert-info" style="margin-bottom:10px;"><span>🟩</span><span style="font-size:11px;"><strong>CNG:</strong> Use IRIDIUM spark plugs always. Cylinder fitness test every 3 years is MANDATORY by law.</span></div>`;
   if(fuel==='Electric') html+=`<div class="alert alert-success" style="margin-bottom:10px;"><span>🔋</span><span style="font-size:11px;"><strong>EV:</strong> Minimal maintenance! No engine oil, spark plugs, or fuel filter needed.</span></div>`;
@@ -8140,8 +8594,8 @@ function openGaragePortal() {
 
 function insTab(tab) {
   ['advisor','plans','calc','claim'].forEach(t => {
-    const p = document.getElementById('ipanel_'+t);
-    const b = document.getElementById('itab_'+t);
+    const p = document.getElementById('ipanel-'+t)||document.getElementById('ipanel_'+t);
+    const b = document.getElementById('itab-'+t)||document.getElementById('itab_'+t);
     if(p) p.style.display = t===tab ? 'block' : 'none';
     if(b) b.classList.toggle('active', t===tab);
   });
@@ -8299,8 +8753,8 @@ function gar_confirmBooking() {
 
 function garTab(tab) {
   ['find','book','track'].forEach(t => {
-    const p=document.getElementById('gpanel_'+t);
-    const b=document.getElementById('gtab_'+t);
+    const p = document.getElementById('gpanel-'+t);
+    const b = document.getElementById('gtab-'+t);
     if(p) p.style.display = t===tab?'block':'none';
     if(b) b.classList.toggle('active', t===tab);
   });
@@ -11606,7 +12060,6 @@ function showTab(tab){
   // Show bill CTA only on dashboard
   const strip = document.getElementById('billCtaStrip');
   if(strip) strip.style.display = tab==='dashboard' ? 'block' : 'none';
-  currentTab = tab;
   if (tab === 'cars') tab = 'garage';
   currentTab = tab;
   document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
@@ -12333,4 +12786,26 @@ function cancelBooking(id){ cancelGarageBooking(id); }
 })();
 </script>
 </body>
-</html>
+</html// ════════════════════════════════════════════════════════
+// TRUSTED GARAGES DATABASE — GarageGPT Verified Network
+// ════════════════════════════════════════════════════════
+const TRUSTED_GARAGES_DB = [
+  { id:'gg001', name:'Sharma Auto Service',  city:'Indore', area:'Vijay Nagar',    dist:0.8, rating:4.8, jobs:342, verified:true,  priceLevel:2, pickup:true,  bike:false, specs:['Maruti','Hyundai','Honda','AC','Suspension'], phone:'9800000001', proofs:89,  videoRate:88, oemRate:92, responseMin:28, complaints:0 },
+  { id:'gg002', name:'Kumar Tech Garage',    city:'Indore', area:'Palasia',        dist:1.4, rating:4.6, jobs:218, verified:true,  priceLevel:2, pickup:true,  bike:false, specs:['Tata','Kia','Engine','Electrical','AC'],     phone:'9800000002', proofs:67,  videoRate:72, oemRate:85, responseMin:45, complaints:1 },
+  { id:'gg003', name:'Singh Multi-Brand',    city:'Indore', area:'Bhawarkua',      dist:2.1, rating:4.5, jobs:189, verified:true,  priceLevel:1, pickup:false, bike:true,  specs:['All brands','Tyres','Brakes','Denting'],     phone:'9800000003', proofs:45,  videoRate:60, oemRate:78, responseMin:55, complaints:0 },
+  { id:'gg004', name:'Royal Bike Studio',    city:'Indore', area:'Rajwada',        dist:1.8, rating:4.7, jobs:156, verified:true,  priceLevel:2, pickup:true,  bike:true,  specs:['RE','KTM','Yamaha','Honda','Performance'],   phone:'9800000004', proofs:53,  videoRate:82, oemRate:90, responseMin:32, complaints:0 },
+  { id:'gg005', name:'City Auto Care',       city:'Indore', area:'MG Road',        dist:3.2, rating:4.3, jobs:98,  verified:false, priceLevel:1, pickup:false, bike:false, specs:['Budget service','All cars','Oil change'],    phone:'9800000005', proofs:12,  videoRate:30, oemRate:45, responseMin:90, complaints:2 },
+  { id:'gg006', name:'Patel AC Specialist',  city:'Indore', area:'Sapna Sangeeta', dist:2.6, rating:4.6, jobs:124, verified:true,  priceLevel:2, pickup:true,  bike:false, specs:['AC Repair','Honda','Maruti','Electrical'],   phone:'9800000006', proofs:38,  videoRate:75, oemRate:88, responseMin:38, complaints:0 },
+  { id:'gg007', name:'Indore Bike Zone',     city:'Indore', area:'Geeta Bhawan',   dist:1.9, rating:4.4, jobs:87,  verified:true,  priceLevel:1, pickup:false, bike:true,  specs:['Hero','Honda','Bajaj','TVS','Chain Lube'], phone:'9800000007', proofs:21,  videoRate:55, oemRate:70, responseMin:60, complaints:1 },
+];
+
+// Compute trustScore for each garage
+TRUSTED_GARAGES_DB.forEach(g => {
+  g.trustScore = Math.min(100, Math.round(
+    Math.min(30, g.videoRate * 0.30) +
+    Math.min(25, g.oemRate   * 0.25) +
+    Math.min(25, ((g.rating - 1) / 4) * 25) +
+    Math.min(10, Math.max(0, (90 - g.responseMin) / 90) * 10) +
+    Math.min(10, Math.max(0, 10 - g.complaints) * 1)
+  ));
+});
